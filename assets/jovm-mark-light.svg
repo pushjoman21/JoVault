@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 32" role="img" aria-labelledby="title">
+  <title id="title">JoVM</title>
+  <g fill="none" stroke="#152d38" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 15h5V9a5 5 0 0 1 5-5h12a5 5 0 0 1 5 5v14a5 5 0 0 1-5 5H13a5 5 0 0 1-5-5v-2"/>
+    <path d="M8 21v2a5 5 0 0 0 10 0V12l6 11 6-8h7m-4-4 4 4-4 4"/>
+  </g>
+</svg>

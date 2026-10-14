@@ -12,8 +12,12 @@ The historical execution of these unchanged cases against WASM SHA-256
 passed all 14 runner controls and produced 116 PASS, 1 FAIL. The retained failure
 is `test/language/module-code/eval-export-dflt-expr-cls-name-meth.js`: a parenthesized
 default class expression lost its callable static `name()` method. A proposed engine
-fix requires a new actual build and execution; this packet does not claim it passed.
-The historical report and frozen twelve-case packet remain unchanged.
+fix was subsequently rebuilt in
+[standalone CI](https://github.com/pushjoman21/JoVault/actions/runs/38561260654): all
+117 unchanged cases and all 14 controls passed on image
+`7641a2c5fea7cd81699e5e07409cdc7d4d27bbacec40d9f37e2fa036a8c8ba9f`.
+The historical report and frozen twelve-case packet remain unchanged. This selected
+profile still leaves 53,499 tests unrun.
 
 ## Run
 

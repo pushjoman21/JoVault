@@ -96,8 +96,10 @@ explicit new result paths, preserve the original failed display-control report,
 and keep unselected tests visible. Do not apply the conformance runner's separate
 global-Script image results to the signed demo image without retesting.
 A wider local run found a class-name-method failure during module evaluation.
-Retain the failing test and original report while investigating a fix; a reduced
-corpus or an unverified patch cannot close that gate.
+The rebuilt class-name fix passed the unchanged 117-case profile and eleven focused
+regressions in standalone CI. Retain the original failing report and image. This
+closes that regression; Script-goal tests, general negative-phase handling, async
+conformance and the remaining 53,499 unrun test units still require work.
 
 A custom R1 runtime remains a separately versioned design option. Keep R0 entry
 points and primitive contracts stable; reject cross-format artifacts and require an

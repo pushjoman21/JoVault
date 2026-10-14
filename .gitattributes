@@ -17,7 +17,8 @@ engine-probe/conformance/LICENSE.test262 -text whitespace=-blank-at-eol
 *.zip binary
 *.gz binary
 *.pdf binary
-# Preserve checksum-bound fixtures, patch inputs and historical measurements exactly.
+# Preserve checksum-bound fixtures, patch inputs, brand assets and historical measurements exactly.
+assets/*.svg -text
 docs/results.json -text
 tests/conformance-fixtures/** -text
 engine-probe/fixture-graphs.json -text

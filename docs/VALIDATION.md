@@ -59,7 +59,7 @@ the awaited native path and signed Boa path returned `42`, with no recorded page
 errors. Two permanent configured Chromium tests also passed, covering async native
 completion, error, timeout/recovery and signed Boa parity. The configured test command
 is `npm run test:jovault:browser`, with the four reviewed asset/pin settings described
-in the [README](../README.md). R0 remains the default and no failure switches engines.
+in the [guide](USAGE.md). R0 remains the default and no failure switches engines.
 
 The loader permits one invocation attempt and primitive arguments/results. Boa uses
 shared 200,000-instruction fuel, a 64 MiB linear-memory maximum, fixed Date at epoch
@@ -216,9 +216,50 @@ The failing case is
 anonymous default class defines a static `name()` method; calling that method during
 module evaluation produced `TypeError: not a callable function`. The corresponding
 unparenthesized declaration case passed. The failure is preserved in the report and
-counts. Investigation points to class-name inference overwriting the method; an
-engine fix is being investigated and has no passing result yet. This is a language
-failure, distinct from the earlier runner display-control failure.
+counts. Class-name inference overwrote the method. At that point an engine fix
+had no passing result. This is a language failure,
+distinct from the earlier runner display-control failure. Its original report is
+preserved alongside the later result below.
+
+### Rebuilt class-name fix and private standalone CI
+
+The standalone implementation is currently in the private
+[JoVault repository](https://github.com/pushjoman21/JoVault).
+[CI run 38561260654](https://github.com/pushjoman21/JoVault/actions/runs/38561260654)
+completed successfully at revision `b4ee21f2e034a5bdd8c8e6a5014585be2f1ad6d6`.
+It rebuilt the cumulative patch from checksum-verified official crates, audited
+the actual Wasm image, and executed the same 117 original tests. All 117 passed,
+with all 14 runner controls passing. The remaining 53,499 test units are still
+`NOT_RUN`; this result does not establish full ECMAScript support.
+
+The fix assigns the inferred default class name before static initialization,
+preserving a class's own static `name` method, field or accessor. Eleven targeted
+regressions passed on the rebuilt image; the old image passed four and failed seven.
+The earlier 116/117 result retains its original image and report.
+
+| Check in this CI run                              | Result                                    |
+| ------------------------------------------------- | ----------------------------------------- |
+| Original restore fixtures                         | 5 passed                                  |
+| Self-authored language / boundary cases           | 20 / 19 passed                            |
+| Primitive argument and fuel cases                 | 31 passed                                 |
+| Class-name regressions                            | 11 passed                                 |
+| Selected Test262 cases / runner controls          | 117 / 14 passed                           |
+| Standalone Node tests / configured Chromium tests | 115 / 2 passed, no skips                  |
+| Engine library tests                              | 1,138 passed                              |
+| Parser library tests                              | 314 passed, one unchanged upstream ignore |
+
+Strict TypeScript, formatting, source inventory, and production feature checks
+also passed. The signed browser tests used this newly built image and its audit,
+rather than reusing the earlier demo image. The uncompressed image is 5,345,338
+bytes, SHA-256 `7641a2c5fea7cd81699e5e07409cdc7d4d27bbacec40d9f37e2fa036a8c8ba9f`.
+Its audit SHA-256 is
+`04d6b1d77e0b9327ff10c1cd80809fb63d25acfb13d6361c1cbb417d1f43c42e`.
+Artifact `11892156851` was downloaded and its ZIP digest verified as
+`72ad8e338479d93a8ab6cd608ad03687cb5f7faccff7b6d0c7ebda6a7303b788`.
+Original logs, reports and image are retained in the private task's
+`ci-private-class-fix/` and `private-ci-b4ee21f.log`. CI artifacts have finite
+retention; these local copies preserve the measured state. Package version 0.0.0
+identifies an unpublished research snapshot, not a production release.
 
 ### Earlier foundation run
 
@@ -278,3 +319,21 @@ safest available VM follows from these checks.
 
 The [research basis](RESEARCH.md) and [roadmap](ROADMAP.md) define the next experiments
 and the distinction between local refusal and authoritative server revocation.
+
+## Standalone source provenance
+
+This repository exports the JoVault source tree from JoVM. The implementation,
+engine patches, permanent tests and synthetic fixtures retain their source hashes
+in [ORIGIN.json](../ORIGIN.json). The copied random helper and existing JoVM brand SVG
+retain their original bytes and MIT attribution. Two compiler imports and the demo
+asset path resolve locally; this repository contains the same implementation.
+
+The JoVM parent packaging integration test stays in JoVM because it tests that
+repository's public allowlist. This export replaces those two parent-only checks
+with standalone inventory tests covering source selection, links, pinned engine
+inputs, private/generated output exclusion and copied-file hashes. Those checks
+are different coverage. `npm run check` runs strict TypeScript and the standalone
+Node suite; engine compilation and signed browser integration also run in CI.
+
+The target is ECMAScript 2025 in browser and Node hosts. Full support remains
+unproven. Read the compatibility and validation documents before enabling Boa.

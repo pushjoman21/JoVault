@@ -187,7 +187,10 @@ if (!isMainThread) {
   assert.ok(Number.isSafeInteger(profile.selectedLimit) && profile.selectedLimit > 0);
   assert.equal(bundle.cases.length, profile.selectedLimit);
   assert.equal(classification.selected, profile.selectedLimit);
-  assert.deepEqual(bundle.cases.map((entry) => entry.name), profile.selectedPaths);
+  assert.deepEqual(
+    bundle.cases.map((entry) => entry.name),
+    profile.selectedPaths,
+  );
   assert.equal(new Set(profile.selectedPaths).size, profile.selectedLimit);
   assert.equal(bundle.profile.workerDeadlineMs, 5000);
   const globalScripts = bundle.cases[0].graph.globalScripts;

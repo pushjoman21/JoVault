@@ -13,7 +13,7 @@ npm run test:jovault:browser
 ```
 
 The browser test requires Chromium. Engine-enabled tests require the four reviewed
-Boa asset settings described in [README](README.md); leaving them unset exercises
+Boa asset settings described in [the guide](docs/USAGE.md); leaving them unset exercises
 the register path and reports the conditional engine check as skipped. The CI
 workflow builds and audits the engine before enabling signed engine integration.
 See [engine build instructions](engine-probe/README.md) for pinned Rust 1.98.1,

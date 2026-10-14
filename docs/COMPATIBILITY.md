@@ -69,7 +69,10 @@ The initial failed display-control run is retained in [validation](VALIDATION.md
 A wider local run found a real module-evaluation failure for a parenthesized
 anonymous default class with a static `name()` method. The failure remains counted;
 it is not excluded to improve the result. Validation records the wider denominator,
-remaining unrun inventory, exact image, and pending engine-fix status.
+remaining unrun inventory and exact images. A rebuilt class-name fix subsequently
+passed the unchanged 117-case profile and all 14 controls in standalone CI. The
+original failure remains a separate historical result; see validation for the
+revision, hashes and remaining 53,499 unrun test units.
 
 This selected slice does not define an ES2025 coverage percentage. Expected
 strict/sloppy/module variants must be reported separately. The suite tracks newer

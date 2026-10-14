@@ -33,14 +33,8 @@
     "Symbol.unscopables",
     "template"
   ],
-  "allowedFlags": [
-    "module",
-    "generated"
-  ],
-  "harness": [
-    "assert.js",
-    "sta.js"
-  ],
+  "allowedFlags": ["module", "generated"],
+  "harness": ["assert.js", "sta.js"],
   "forbiddenGuestIdentifiers": [
     "$262",
     "print",

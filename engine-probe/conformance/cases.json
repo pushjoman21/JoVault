@@ -34,14 +34,8 @@
       "Symbol.unscopables",
       "template"
     ],
-    "allowedFlags": [
-      "module",
-      "generated"
-    ],
-    "harness": [
-      "assert.js",
-      "sta.js"
-    ],
+    "allowedFlags": ["module", "generated"],
+    "harness": ["assert.js", "sta.js"],
     "forbiddenGuestIdentifiers": [
       "$262",
       "print",
@@ -182,9 +176,7 @@
     {
       "name": "test/language/module-code/ambiguous-export-bindings/import-and-export-propagates-binding.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -237,9 +229,7 @@
     {
       "name": "test/language/module-code/ambiguous-export-bindings/namespace-unambiguous-if-export-star-as-from-and-import-star-as-and-export.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -302,9 +292,7 @@
     {
       "name": "test/language/module-code/ambiguous-export-bindings/namespace-unambiguous-if-export-star-as-from.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -357,9 +345,7 @@
     {
       "name": "test/language/module-code/ambiguous-export-bindings/namespace-unambiguous-if-import-star-as-and-export.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -412,9 +398,7 @@
     {
       "name": "test/language/module-code/ambiguous-export-bindings/omitted-from-namespace.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -467,9 +451,7 @@
     {
       "name": "test/language/module-code/eval-export-cls-semi.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -507,9 +489,7 @@
     {
       "name": "test/language/module-code/eval-export-dflt-cls-anon-semi.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -547,9 +527,7 @@
     {
       "name": "test/language/module-code/eval-export-dflt-cls-anon.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -587,9 +565,7 @@
     {
       "name": "test/language/module-code/eval-export-dflt-cls-name-meth.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -627,9 +603,7 @@
     {
       "name": "test/language/module-code/eval-export-dflt-cls-named-semi.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -667,9 +641,7 @@
     {
       "name": "test/language/module-code/eval-export-dflt-cls-named.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -707,9 +679,7 @@
     {
       "name": "test/language/module-code/eval-export-dflt-expr-cls-anon.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -747,9 +717,7 @@
     {
       "name": "test/language/module-code/eval-export-dflt-expr-cls-name-meth.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -787,9 +755,7 @@
     {
       "name": "test/language/module-code/eval-export-dflt-expr-cls-named.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -827,9 +793,7 @@
     {
       "name": "test/language/module-code/eval-export-dflt-expr-fn-anon.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -867,9 +831,7 @@
     {
       "name": "test/language/module-code/eval-export-dflt-expr-fn-named.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -907,9 +869,7 @@
     {
       "name": "test/language/module-code/eval-export-dflt-expr-in.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -947,9 +907,7 @@
     {
       "name": "test/language/module-code/eval-export-dflt-fun-anon-semi.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -987,9 +945,7 @@
     {
       "name": "test/language/module-code/eval-export-dflt-fun-named-semi.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -1027,9 +983,7 @@
     {
       "name": "test/language/module-code/eval-export-fun-semi.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -1067,9 +1021,7 @@
     {
       "name": "test/language/module-code/eval-gtbndng-indirect-trlng-comma.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -1112,9 +1064,7 @@
     {
       "name": "test/language/module-code/eval-gtbndng-indirect-update-dflt.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -1157,9 +1107,7 @@
     {
       "name": "test/language/module-code/eval-gtbndng-local-bndng-cls.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -1197,9 +1145,7 @@
     {
       "name": "test/language/module-code/eval-gtbndng-local-bndng-const.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -1237,9 +1183,7 @@
     {
       "name": "test/language/module-code/eval-gtbndng-local-bndng-let.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -1277,9 +1221,7 @@
     {
       "name": "test/language/module-code/eval-gtbndng-local-bndng-var.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -1317,9 +1259,7 @@
     {
       "name": "test/language/module-code/eval-this.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -1357,9 +1297,7 @@
     {
       "name": "test/language/module-code/export-default-asyncfunction-declaration-binding.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -1397,9 +1335,7 @@
     {
       "name": "test/language/module-code/export-default-asyncgenerator-declaration-binding.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -1437,9 +1373,7 @@
     {
       "name": "test/language/module-code/export-default-function-declaration-binding.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -1477,9 +1411,7 @@
     {
       "name": "test/language/module-code/export-default-generator-declaration-binding.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -1517,13 +1449,8 @@
     {
       "name": "test/language/module-code/export-expname-binding-index.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "arbitrary-module-namespace-names",
-          "Reflect"
-        ],
+        "flags": ["module"],
+        "features": ["arbitrary-module-namespace-names", "Reflect"],
         "includes": [],
         "negative": null
       },
@@ -1565,12 +1492,8 @@
     {
       "name": "test/language/module-code/export-expname-binding-string.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "arbitrary-module-namespace-names"
-        ],
+        "flags": ["module"],
+        "features": ["arbitrary-module-namespace-names"],
         "includes": [],
         "negative": null
       },
@@ -1612,12 +1535,8 @@
     {
       "name": "test/language/module-code/export-expname-from-binding-string.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "arbitrary-module-namespace-names"
-        ],
+        "flags": ["module"],
+        "features": ["arbitrary-module-namespace-names"],
         "includes": [],
         "negative": null
       },
@@ -1659,12 +1578,8 @@
     {
       "name": "test/language/module-code/export-expname-from-star-string.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "arbitrary-module-namespace-names"
-        ],
+        "flags": ["module"],
+        "features": ["arbitrary-module-namespace-names"],
         "includes": [],
         "negative": null
       },
@@ -1706,12 +1621,8 @@
     {
       "name": "test/language/module-code/export-expname-from-star.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "arbitrary-module-namespace-names"
-        ],
+        "flags": ["module"],
+        "features": ["arbitrary-module-namespace-names"],
         "includes": [],
         "negative": null
       },
@@ -1753,12 +1664,8 @@
     {
       "name": "test/language/module-code/export-expname-from-string-binding.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "arbitrary-module-namespace-names"
-        ],
+        "flags": ["module"],
+        "features": ["arbitrary-module-namespace-names"],
         "includes": [],
         "negative": null
       },
@@ -1800,12 +1707,8 @@
     {
       "name": "test/language/module-code/export-expname-from-string-string.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "arbitrary-module-namespace-names"
-        ],
+        "flags": ["module"],
+        "features": ["arbitrary-module-namespace-names"],
         "includes": [],
         "negative": null
       },
@@ -1847,12 +1750,8 @@
     {
       "name": "test/language/module-code/export-expname-from-string.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "arbitrary-module-namespace-names"
-        ],
+        "flags": ["module"],
+        "features": ["arbitrary-module-namespace-names"],
         "includes": [],
         "negative": null
       },
@@ -1894,12 +1793,8 @@
     {
       "name": "test/language/module-code/export-expname-import-string-binding.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "arbitrary-module-namespace-names"
-        ],
+        "flags": ["module"],
+        "features": ["arbitrary-module-namespace-names"],
         "includes": [],
         "negative": null
       },
@@ -1941,12 +1836,8 @@
     {
       "name": "test/language/module-code/export-star-as-dflt.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "export-star-as-namespace-from-module"
-        ],
+        "flags": ["module"],
+        "features": ["export-star-as-namespace-from-module"],
         "includes": [],
         "negative": null
       },
@@ -1988,9 +1879,7 @@
     {
       "name": "test/language/module-code/instn-iee-bndng-cls.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2033,9 +1922,7 @@
     {
       "name": "test/language/module-code/instn-iee-bndng-const.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2078,9 +1965,7 @@
     {
       "name": "test/language/module-code/instn-iee-bndng-fun.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2123,9 +2008,7 @@
     {
       "name": "test/language/module-code/instn-iee-bndng-let.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2168,9 +2051,7 @@
     {
       "name": "test/language/module-code/instn-iee-bndng-var.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2213,9 +2094,7 @@
     {
       "name": "test/language/module-code/instn-iee-iee-cycle.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2258,9 +2137,7 @@
     {
       "name": "test/language/module-code/instn-iee-star-cycle.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2308,9 +2185,7 @@
     {
       "name": "test/language/module-code/instn-iee-trlng-comma.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2353,9 +2228,7 @@
     {
       "name": "test/language/module-code/instn-local-bndng-for-dup.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2393,9 +2266,7 @@
     {
       "name": "test/language/module-code/instn-local-bndng-var-dup.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2433,9 +2304,7 @@
     {
       "name": "test/language/module-code/instn-named-bndng-cls.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2473,9 +2342,7 @@
     {
       "name": "test/language/module-code/instn-named-bndng-const.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2513,9 +2380,7 @@
     {
       "name": "test/language/module-code/instn-named-bndng-dflt-cls.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2553,9 +2418,7 @@
     {
       "name": "test/language/module-code/instn-named-bndng-dflt-expr.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2593,9 +2456,7 @@
     {
       "name": "test/language/module-code/instn-named-bndng-dflt-fun-anon.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2633,9 +2494,7 @@
     {
       "name": "test/language/module-code/instn-named-bndng-dflt-fun-named.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2673,9 +2532,7 @@
     {
       "name": "test/language/module-code/instn-named-bndng-dflt-named.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2713,9 +2570,7 @@
     {
       "name": "test/language/module-code/instn-named-bndng-dflt-star.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2753,9 +2608,7 @@
     {
       "name": "test/language/module-code/instn-named-bndng-fun.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2793,9 +2646,7 @@
     {
       "name": "test/language/module-code/instn-named-bndng-let.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2833,9 +2684,7 @@
     {
       "name": "test/language/module-code/instn-named-bndng-trlng-comma.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2873,9 +2722,7 @@
     {
       "name": "test/language/module-code/instn-named-bndng-var.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2913,9 +2760,7 @@
     {
       "name": "test/language/module-code/instn-named-id-name.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2953,9 +2798,7 @@
     {
       "name": "test/language/module-code/instn-named-iee-cycle.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -2998,9 +2841,7 @@
     {
       "name": "test/language/module-code/instn-named-star-cycle.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -3048,12 +2889,8 @@
     {
       "name": "test/language/module-code/instn-once.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "export-star-as-namespace-from-module"
-        ],
+        "flags": ["module"],
+        "features": ["export-star-as-namespace-from-module"],
         "includes": [],
         "negative": null
       },
@@ -3090,12 +2927,8 @@
     {
       "name": "test/language/module-code/instn-star-as-props-dflt-skip.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "export-star-as-namespace-from-module"
-        ],
+        "flags": ["module"],
+        "features": ["export-star-as-namespace-from-module"],
         "includes": [],
         "negative": null
       },
@@ -3152,9 +2985,7 @@
     {
       "name": "test/language/module-code/instn-star-binding.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -3192,9 +3023,7 @@
     {
       "name": "test/language/module-code/instn-star-equality.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -3237,9 +3066,7 @@
     {
       "name": "test/language/module-code/instn-star-id-name.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -3277,9 +3104,7 @@
     {
       "name": "test/language/module-code/instn-star-iee-cycle.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -3322,9 +3147,7 @@
     {
       "name": "test/language/module-code/instn-star-iee-multi-cycle-same-name.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -3382,9 +3205,7 @@
     {
       "name": "test/language/module-code/instn-star-iee-single-cycle-same-name.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -3437,9 +3258,7 @@
     {
       "name": "test/language/module-code/instn-star-props-circular.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -3487,9 +3306,7 @@
     {
       "name": "test/language/module-code/instn-star-props-dflt-keep-indirect.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -3537,9 +3354,7 @@
     {
       "name": "test/language/module-code/instn-star-props-dflt-keep-local.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -3587,9 +3402,7 @@
     {
       "name": "test/language/module-code/instn-star-props-dflt-skip.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -3647,12 +3460,8 @@
     {
       "name": "test/language/module-code/instn-star-props-nrml.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "export-star-as-namespace-from-module"
-        ],
+        "flags": ["module"],
+        "features": ["export-star-as-namespace-from-module"],
         "includes": [],
         "negative": null
       },
@@ -3704,9 +3513,7 @@
     {
       "name": "test/language/module-code/instn-star-star-cycle.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -3754,12 +3561,8 @@
     {
       "name": "test/language/module-code/namespace/Symbol.toStringTag.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "Symbol.toStringTag"
-        ],
+        "flags": ["module"],
+        "features": ["Symbol.toStringTag"],
         "includes": [],
         "negative": null
       },
@@ -3796,12 +3599,8 @@
     {
       "name": "test/language/module-code/namespace/internals/delete-exported-init.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "Reflect"
-        ],
+        "flags": ["module"],
+        "features": ["Reflect"],
         "includes": [],
         "negative": null
       },
@@ -3838,13 +3637,8 @@
     {
       "name": "test/language/module-code/namespace/internals/delete-exported-uninit.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "Reflect",
-          "let"
-        ],
+        "flags": ["module"],
+        "features": ["Reflect", "let"],
         "includes": [],
         "negative": null
       },
@@ -3881,14 +3675,8 @@
     {
       "name": "test/language/module-code/namespace/internals/delete-non-exported.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "Reflect",
-          "Symbol",
-          "Symbol.toStringTag"
-        ],
+        "flags": ["module"],
+        "features": ["Reflect", "Symbol", "Symbol.toStringTag"],
         "includes": [],
         "negative": null
       },
@@ -3925,9 +3713,7 @@
     {
       "name": "test/language/module-code/namespace/internals/enumerate-binding-uninit.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -3965,12 +3751,8 @@
     {
       "name": "test/language/module-code/namespace/internals/get-nested-namespace-dflt-skip.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "export-star-as-namespace-from-module"
-        ],
+        "flags": ["module"],
+        "features": ["export-star-as-namespace-from-module"],
         "includes": [],
         "negative": null
       },
@@ -4027,12 +3809,8 @@
     {
       "name": "test/language/module-code/namespace/internals/get-nested-namespace-props-nrml.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "export-star-as-namespace-from-module"
-        ],
+        "flags": ["module"],
+        "features": ["export-star-as-namespace-from-module"],
         "includes": [],
         "negative": null
       },
@@ -4084,9 +3862,7 @@
     {
       "name": "test/language/module-code/namespace/internals/get-own-property-str-found-init.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -4124,12 +3900,8 @@
     {
       "name": "test/language/module-code/namespace/internals/get-own-property-str-found-uninit.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "let"
-        ],
+        "flags": ["module"],
+        "features": ["let"],
         "includes": [],
         "negative": null
       },
@@ -4166,9 +3938,7 @@
     {
       "name": "test/language/module-code/namespace/internals/get-own-property-str-not-found.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -4206,13 +3976,8 @@
     {
       "name": "test/language/module-code/namespace/internals/get-own-property-sym.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "Symbol",
-          "Symbol.toStringTag"
-        ],
+        "flags": ["module"],
+        "features": ["Symbol", "Symbol.toStringTag"],
         "includes": [],
         "negative": null
       },
@@ -4249,9 +4014,7 @@
     {
       "name": "test/language/module-code/namespace/internals/get-prototype-of.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -4289,9 +4052,7 @@
     {
       "name": "test/language/module-code/namespace/internals/get-str-found-init.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -4329,12 +4090,8 @@
     {
       "name": "test/language/module-code/namespace/internals/get-str-found-uninit.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "let"
-        ],
+        "flags": ["module"],
+        "features": ["let"],
         "includes": [],
         "negative": null
       },
@@ -4371,12 +4128,8 @@
     {
       "name": "test/language/module-code/namespace/internals/get-str-initialize.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "let"
-        ],
+        "flags": ["module"],
+        "features": ["let"],
         "includes": [],
         "negative": null
       },
@@ -4413,9 +4166,7 @@
     {
       "name": "test/language/module-code/namespace/internals/get-str-not-found.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -4453,9 +4204,7 @@
     {
       "name": "test/language/module-code/namespace/internals/get-str-update.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -4493,12 +4242,8 @@
     {
       "name": "test/language/module-code/namespace/internals/get-sym-found.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "Symbol.toStringTag"
-        ],
+        "flags": ["module"],
+        "features": ["Symbol.toStringTag"],
         "includes": [],
         "negative": null
       },
@@ -4535,12 +4280,8 @@
     {
       "name": "test/language/module-code/namespace/internals/get-sym-not-found.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "Symbol"
-        ],
+        "flags": ["module"],
+        "features": ["Symbol"],
         "includes": [],
         "negative": null
       },
@@ -4577,12 +4318,8 @@
     {
       "name": "test/language/module-code/namespace/internals/has-property-str-found-init.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "Reflect"
-        ],
+        "flags": ["module"],
+        "features": ["Reflect"],
         "includes": [],
         "negative": null
       },
@@ -4619,13 +4356,8 @@
     {
       "name": "test/language/module-code/namespace/internals/has-property-str-found-uninit.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "Reflect",
-          "let"
-        ],
+        "flags": ["module"],
+        "features": ["Reflect", "let"],
         "includes": [],
         "negative": null
       },
@@ -4662,12 +4394,8 @@
     {
       "name": "test/language/module-code/namespace/internals/has-property-str-not-found.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "Reflect"
-        ],
+        "flags": ["module"],
+        "features": ["Reflect"],
         "includes": [],
         "negative": null
       },
@@ -4704,13 +4432,8 @@
     {
       "name": "test/language/module-code/namespace/internals/has-property-sym-found.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "Symbol.toStringTag",
-          "Reflect"
-        ],
+        "flags": ["module"],
+        "features": ["Symbol.toStringTag", "Reflect"],
         "includes": [],
         "negative": null
       },
@@ -4747,13 +4470,8 @@
     {
       "name": "test/language/module-code/namespace/internals/has-property-sym-not-found.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "Symbol",
-          "Reflect"
-        ],
+        "flags": ["module"],
+        "features": ["Symbol", "Reflect"],
         "includes": [],
         "negative": null
       },
@@ -4790,9 +4508,7 @@
     {
       "name": "test/language/module-code/namespace/internals/is-extensible.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -4830,9 +4546,7 @@
     {
       "name": "test/language/module-code/namespace/internals/object-hasOwnProperty-binding-uninit.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -4870,9 +4584,7 @@
     {
       "name": "test/language/module-code/namespace/internals/object-keys-binding-uninit.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -4910,9 +4622,7 @@
     {
       "name": "test/language/module-code/namespace/internals/object-propertyIsEnumerable-binding-uninit.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -4950,14 +4660,8 @@
     {
       "name": "test/language/module-code/namespace/internals/own-property-keys-binding-types.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "Reflect",
-          "Symbol.toStringTag",
-          "let"
-        ],
+        "flags": ["module"],
+        "features": ["Reflect", "Symbol.toStringTag", "let"],
         "includes": [],
         "negative": null
       },
@@ -4999,13 +4703,8 @@
     {
       "name": "test/language/module-code/namespace/internals/own-property-keys-sort.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "Reflect",
-          "Symbol.toStringTag"
-        ],
+        "flags": ["module"],
+        "features": ["Reflect", "Symbol.toStringTag"],
         "includes": [],
         "negative": null
       },
@@ -5042,12 +4741,8 @@
     {
       "name": "test/language/module-code/namespace/internals/prevent-extensions.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "Reflect"
-        ],
+        "flags": ["module"],
+        "features": ["Reflect"],
         "includes": [],
         "negative": null
       },
@@ -5084,9 +4779,7 @@
     {
       "name": "test/language/module-code/namespace/internals/set-prototype-of-null.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -5124,9 +4817,7 @@
     {
       "name": "test/language/module-code/namespace/internals/set-prototype-of.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null
@@ -5164,14 +4855,8 @@
     {
       "name": "test/language/module-code/namespace/internals/set.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "Reflect",
-          "Symbol",
-          "Symbol.toStringTag"
-        ],
+        "flags": ["module"],
+        "features": ["Reflect", "Symbol", "Symbol.toStringTag"],
         "includes": [],
         "negative": null
       },
@@ -5208,12 +4893,8 @@
     {
       "name": "test/language/module-code/namespace/internals/super-access-to-tdz-binding.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "let"
-        ],
+        "flags": ["module"],
+        "features": ["let"],
         "includes": [],
         "negative": null
       },
@@ -5250,12 +4931,8 @@
     {
       "name": "test/language/module-code/namespace/internals/super-set-to-tdz-binding-with-accessor.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
-        "features": [
-          "let"
-        ],
+        "flags": ["module"],
+        "features": ["let"],
         "includes": [],
         "negative": null
       },
@@ -5292,9 +4969,7 @@
     {
       "name": "test/language/module-code/parse-export-empty.js",
       "metadata": {
-        "flags": [
-          "module"
-        ],
+        "flags": ["module"],
         "features": [],
         "includes": [],
         "negative": null

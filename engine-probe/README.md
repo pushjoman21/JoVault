@@ -13,7 +13,8 @@ Counters check that the second instance does not enter a compile ABI. The
 workflow runs five original fixtures, the current module graph fixture inventory,
 31 primitive argument, metadata, rejection and instruction budget cases, and a
 separately gated 117-test Test262 module profile. The original wider run passed
-116 cases and failed one; the current class-name patch requires its own CI result.
+116 cases and failed one. The rebuilt class-name patch subsequently passed all
+117 in [standalone CI](https://github.com/pushjoman21/JoVault/actions/runs/38561260654).
 Results belong to the exact engine hash recorded by that workflow run.
 
 The image contains raw Rust allocator, garbage collector, engine and object
@@ -37,6 +38,7 @@ RUSTFLAGS='--cfg getrandom_backend="custom" -C link-arg=--max-memory=67108864 -C
 node probe.mjs
 node graph-probe.mjs
 node args-probe.mjs
+node class-name-probe.mjs
 ```
 
 The cumulative patches apply directly to the official engine and parser 0.22.0
@@ -51,8 +53,10 @@ applier, manifest and two unified patches.
 The current packet also corrects inferred names for anonymous default class
 expressions before their static initialization. Eleven targeted regressions cover
 static names, getters, fields, early reads, deleted names and unchanged controls.
-The older image failed seven of these cases. Positive results for this packet
-require its own rebuilt image and CI run; older checkpoints cannot be relabeled.
+The older image failed seven of these cases. The rebuilt image passed all eleven
+in the CI run above, alongside 1,138 engine tests and 314 parser tests (one upstream
+ignore). Exact image hashes and historical results are in
+[validation](../docs/VALIDATION.md); older checkpoints are not relabeled.
 
 With `source-removal`, each compiler context sets `.retain_source_text(false)`.
 The parser skips whole-source recording while preserving UTF-16 positions,

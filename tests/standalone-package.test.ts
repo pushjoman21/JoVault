@@ -24,6 +24,7 @@ test('standalone inventory includes implementation and pinned engine inputs and 
     'engine-probe/patches/boa_engine-0.22.0.patch',
     'engine-probe/conformance/LICENSE.test262',
     'assets/jovm-mark.svg',
+    'assets/jovm-mark-light.svg',
   ];
   const excluded = [
     'private/notes.md',
@@ -98,4 +99,5 @@ test('exported origin records every source copy and the unchanged helper and bra
   assert.ok(origin.exclusions.some((entry) => entry.source.endsWith('/tests/repository.test.ts')));
   assert.ok(origin.files.some((entry) => entry.destination === 'src/random.ts'));
   assert.ok(origin.files.some((entry) => entry.destination === 'assets/jovm-mark.svg'));
+  assert.ok(origin.files.some((entry) => entry.destination === 'assets/jovm-mark-light.svg'));
 });
