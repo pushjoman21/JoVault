@@ -26,8 +26,8 @@
     {
       "source": "side_pr/JoVault/README.md",
       "destination": "README.md",
-      "sourceSha256": "c509b44ba7f2fc0be5ff8cf132a271f6ac1f6d1a8ed4d43e86642e068d251db2",
-      "destinationSha256": "c98d4ab3e0a98f940677dbea8394a7a2436c923dd1ae25a7a319c1bc4f9f2c2f",
+      "sourceSha256": "30a736e205ff5123d6f59ea0f98c9f637366a56f84c1b8963764588107b9c5bb",
+      "destinationSha256": "a4c9ee9dc556dfccb60ff26eff34b76c6615d3d21a738918a662a3a123cbc9b7",
       "reason": "Lift the owned JoVault source tree without an alternate implementation.",
       "transforms": [
         {
@@ -940,7 +940,7 @@
     },
     {
       "destination": "CHANGELOG.md",
-      "destinationSha256": "11fef86cc763b053c8501546367bf293e5c50254ad154bea84ef960a3a5cbded"
+      "destinationSha256": "83855212eae4b32d826d8cf56c3082f7f71aae1fcc934d729e343b5b55f3deec"
     },
     {
       "destination": ".gitignore",

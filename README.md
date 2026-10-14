@@ -5,8 +5,9 @@
 
 # JoVault
 
-A JavaScript compiler and register-VM research project. Compile supported code,
-inspect its instructions, and compare native execution with the matching VM.
+Compile a supported JavaScript subset to bytecode and run it in a register-based
+virtual machine. JoVault is a TypeScript research project with a local browser
+demo and an optional WebAssembly engine path.
 
 [Research](https://jomanvm.vercel.app/posts/2026-10-14-jovault-register-vm.html) · [Guide](docs/USAGE.md) · [Compatibility](docs/COMPATIBILITY.md) · [Validation](docs/VALIDATION.md)
 
@@ -15,16 +16,20 @@ engineering remain unproven. Code delivered to a browser remains inspectable.
 
 ## Try it
 
-Use Node.js >=24.11.0 <25 and npm. From the repository root:
+Use Node.js >=24.11.0 <25 and npm. Clone the standalone repository and start the
+local demo:
 
 ```sh
+git clone https://github.com/pushjoman21/JoVault.git
+cd JoVault
 npm ci
-npm run test:jovault
 npm run jovault:demo
 ```
 
 Open [127.0.0.1:4971](http://127.0.0.1:4971). Edit JavaScript, compile it, then run
 the original and compiled versions locally with the same arguments.
+The editor shows the register instructions and generated ESM wrapper.
+Run `npm run check` to typecheck the project and execute its Node tests.
 
 ## What runs
 
@@ -44,3 +49,11 @@ Signed packages bind code, runtime, deployment and expiry. R0 changes its opcode
 mapping in ten-minute epochs. Local expiry checks can be patched by the client
 owner; they cannot revoke a copied algorithm. Keep secrets and authorization on a
 server. [Architecture](docs/ARCHITECTURE.md) explains the trust boundaries.
+
+## Contribute
+
+Compiler reproductions and compatibility tests are welcome. Read the
+[contribution guide](https://github.com/pushjoman21/JoVault/blob/main/CONTRIBUTING.md)
+and include the input, expected result and actual result in a
+[bug report](https://github.com/pushjoman21/JoVault/issues).
+Star the repository to bookmark it; use Watch for release notifications.
