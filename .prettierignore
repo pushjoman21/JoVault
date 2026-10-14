@@ -1,0 +1,8 @@
+node_modules
+engine-probe/target
+engine-probe/audit/target
+engine-probe/evidence
+engine-probe/patches/vendor-budget
+engine-probe/patches/crate-cache
+engine-probe/*.json
+engine-probe/conformance/*.json

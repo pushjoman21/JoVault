@@ -1,0 +1,99 @@
+{
+  "schema": 1,
+  "experiment": "JV-COST-1-pilot",
+  "measuredAt": "2026-10-14T09:50:43.91Z",
+  "format": "JOVLT-R0",
+  "scope": "Local synthetic Node pilot, not browser costs or analyst resistance",
+  "baseCommit": "8cf599b",
+  "implementation": [
+    {
+      "path": "src/register-compiler.ts",
+      "sha256": "a1addaf823fc41b6bf45fc5ae8c7b09e267cead56ee58ee4b3b7749ac9ad653a"
+    },
+    {
+      "path": "src/register-runtime.ts",
+      "sha256": "e4a00248224335f56085413da70b738a20aa632a05bfe99b35dc38a980e1fe83"
+    },
+    {
+      "path": "src/register-contract.ts",
+      "sha256": "7756d67d18a3d8af037a7b2918e4b29d1cd712b620ac9997cbf9c235cc5e5824"
+    },
+    {
+      "path": "src/frontend.ts",
+      "sha256": "c719c97a4f73be86d662426b9f7274c356412bf68e59fa7c9b796cd3d9408fae"
+    },
+    {
+      "path": "src/ir.ts",
+      "sha256": "8a4069a6d69f7de5b2a7c5ae8d2340bbe45b4f979a0f11e66300168d1004e189"
+    }
+  ],
+  "harnessSha256": "4b8df2e71b74f64729b2671fd893bb0538b917af2b1be19dd47671d2d8d0ed86",
+  "lockfileSha256": "05d9bebd41494cb60d2ee69364ca82cff8dc4401caa44198ddf35fac65d122b2",
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "win32",
+    "release": "10.0.26100",
+    "cpu": "Intel(R) Core(TM) i5-10210U CPU @ 1.60GHz",
+    "logicalCpus": 8
+  },
+  "protocol": {
+    "warmups": 1,
+    "samples": 7,
+    "invocationInput": 123,
+    "clock": "real Date.now; no expiry bypass",
+    "mode": "serial",
+    "sourceSizes": [0, 100, 2500],
+    "timeUnit": "ms"
+  },
+  "results": [
+    {
+      "lines": 1,
+      "sourceBytes": 42,
+      "sourceSha256": "1f37974000543a306287da7a86f03b3d557e4cf6f3cc5a461142f6fcc7a5ef76",
+      "artifactBytes": 370,
+      "instructions": 6,
+      "parity": "PASS",
+      "medianMs": {
+        "compile": 0.9397000000000162,
+        "load": 0.0966000000000804,
+        "invoke": 0.014999999999986358,
+        "native": 0.0003000000000383807
+      }
+    },
+    {
+      "lines": 104,
+      "sourceBytes": 2624,
+      "sourceSha256": "6fdad26e8ec57bbf15104dd6d2e9f78aa5c2b832ab143fb2a114e6e6f7cf914e",
+      "artifactBytes": 11543,
+      "instructions": 808,
+      "parity": "PASS",
+      "medianMs": {
+        "compile": 3.699299999999994,
+        "load": 2.4505000000000337,
+        "invoke": 0.22230000000001837,
+        "native": 0.002299999999991087
+      }
+    },
+    {
+      "lines": 2504,
+      "sourceBytes": 64251,
+      "sourceSha256": "6981baa737b2eaecf60f042fc2b59fc63bc64a26888876cbd49a343d67f91181",
+      "artifactBytes": 277170,
+      "instructions": 20008,
+      "parity": "PASS",
+      "medianMs": {
+        "compile": 42.072400000000016,
+        "load": 48.118799999999965,
+        "invoke": 4.436000000000149,
+        "native": 0.013500000000021828
+      }
+    }
+  ],
+  "limits": [
+    "Seven samples after one warm-up; sub-millisecond native times are noisy",
+    "Sequential harness on a developer machine; background activity is not controlled",
+    "Load includes schema validation and snapshots; invocation excludes module and worker startup",
+    "Synthetic scalar programs do not establish general JavaScript compatibility",
+    "Opcode permutation has no measured analyst-resistance benefit"
+  ]
+}

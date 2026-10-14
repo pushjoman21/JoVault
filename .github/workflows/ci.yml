@@ -1,0 +1,103 @@
+name: JoVault research checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  checkpoint:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: engine-probe
+    env:
+      RUSTFLAGS: '--cfg getrandom_backend="custom" -C link-arg=--max-memory=67108864 -C link-arg=--export=__stack_pointer -C link-arg=--export=__indirect_function_table'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Check out pinned official Test262 inputs
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: tc39/test262
+          ref: d53ebc8b1931d9f1541e43d59650776e4b766248
+          path: test262-input
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 24.11.1
+      - name: Install pinned compiler
+        run: rustup toolchain install 1.98.1 --profile minimal --target wasm32-unknown-unknown --component rustfmt
+      - name: Materialize checksum-verified engine patches
+        run: |
+          mkdir -p patches/crate-cache
+          curl --fail --location --proto '=https' --tlsv1.2 https://static.crates.io/crates/boa_engine/boa_engine-0.22.0.crate --output patches/crate-cache/boa_engine-0.22.0.crate
+          curl --fail --location --proto '=https' --tlsv1.2 https://static.crates.io/crates/boa_parser/boa_parser-0.22.0.crate --output patches/crate-cache/boa_parser-0.22.0.crate
+          python3 patches/apply.py --cache-dir patches/crate-cache --destination patches/vendor-budget --manifest-sha256 ca6baa7bf0427ae12571daa09c42fe3a24dbe2096c7a48cac362bdfd775b9f06
+      - name: Check Rust format
+        run: cargo +1.98.1 fmt -- --check
+      - name: Build reviewed probe
+        run: cargo +1.98.1 build --locked --target wasm32-unknown-unknown --release --features source-removal,instruction-budget
+      - name: Audit checkpoint state outside linear memory
+        run: |
+          mkdir -p evidence
+          RUSTFLAGS='' cargo +1.98.1 run --locked --release --manifest-path audit/Cargo.toml -- target/wasm32-unknown-unknown/release/jovault_boa_snapshot_probe.wasm evidence/wasm-state-audit.json
+      - name: Execute fresh-instance checkpoint fixtures
+        run: node probe.mjs
+      - name: Execute module graph and language fixtures
+        run: node graph-probe.mjs
+      - name: Execute all primitive argument and fuel fixtures
+        run: node args-probe.mjs
+      - name: Check default anonymous class initialization
+        run: node class-name-probe.mjs --wasm target/wasm32-unknown-unknown/release/jovault_boa_snapshot_probe.wasm --output evidence/class-name-results.json
+      - name: Verify and execute the bounded Test262 module slice
+        run: |
+          node conformance/verify-cases.mjs --source-root "$GITHUB_WORKSPACE/test262-input"
+          node conformance/runner.mjs --output evidence/test262-results.json
+      - name: Install JavaScript integration tooling
+        working-directory: .
+        run: npm ci
+      - name: Test signed checkpoint delivery and browser comparison
+        run: |
+          export JOVAULT_BOA_WASM="$PWD/target/wasm32-unknown-unknown/release/jovault_boa_snapshot_probe.wasm"
+          export JOVAULT_BOA_AUDIT="$PWD/evidence/wasm-state-audit.json"
+          export JOVAULT_BOA_WASM_SHA256="$(sha256sum "$JOVAULT_BOA_WASM" | cut -d ' ' -f 1)"
+          export JOVAULT_BOA_AUDIT_SHA256="$(sha256sum "$JOVAULT_BOA_AUDIT" | cut -d ' ' -f 1)"
+          cd ..
+          npm run check
+          npm run quality:repo
+          npm run format:check
+          npx playwright install --with-deps chromium
+          npm run test:jovault:browser
+      - name: Engine and parser unit regressions
+        run: |
+          RUSTFLAGS='' cargo +1.98.1 test --manifest-path patches/vendor-budget/boa_engine-0.22.0/Cargo.toml --features instruction-budget --config "patch.crates-io.boa_parser.path=\"$PWD/patches/vendor-budget/boa_parser-0.22.0\"" --lib
+          RUSTFLAGS='' cargo +1.98.1 test --manifest-path patches/vendor-budget/boa_parser-0.22.0/Cargo.toml --lib
+      - name: Audit production feature selection
+        run: |
+          RUSTFLAGS='' cargo +1.98.1 tree --locked --features source-removal,instruction-budget -e features > evidence/dependency-features.txt
+          if grep -E 'boa_engine feature "fuzz"|boa_ast feature "arbitrary"|boa_interner feature "arbitrary"' evidence/dependency-features.txt; then
+            echo 'Fuzzing features are not part of the runtime profile.' >&2
+            exit 1
+          fi
+      - name: Record build identity
+        if: always()
+        run: |
+          mkdir -p evidence
+          git rev-parse HEAD > evidence/commit.txt
+          rustc +1.98.1 --version --verbose > evidence/compiler.txt
+          node --version > evidence/node.txt
+          sha256sum Cargo.toml Cargo.lock src/lib.rs probe.mjs graph-probe.mjs args-probe.mjs class-name-probe.mjs fixture-class-names.json fixture-graphs.json conformance/* audit/Cargo.toml audit/Cargo.lock audit/src/main.rs patches/apply.py patches/manifest.json patches/*.patch > evidence/source.sha256
+          if test -f target/wasm32-unknown-unknown/release/jovault_boa_snapshot_probe.wasm; then
+            cp target/wasm32-unknown-unknown/release/jovault_boa_snapshot_probe.wasm evidence/
+            sha256sum evidence/*.wasm > evidence/wasm.sha256
+          fi
+          if test -f results.json; then cp results.json evidence/; fi
+          if test -f graph-results.json; then cp graph-results.json evidence/; fi
+          if test -f argument-results.json; then cp argument-results.json evidence/; fi
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: jovault-engine-probe
+          path: engine-probe/evidence
+          retention-days: 7
+          if-no-files-found: error

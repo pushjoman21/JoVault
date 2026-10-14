@@ -1,0 +1,35 @@
+{
+  "name": "jovault-research",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "Experimental JavaScript register VM and authenticated same-build Boa checkpoints.",
+  "engines": {
+    "node": ">=24.11.0 <25"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test --test-concurrency=1 \"tests/*.test.ts\"",
+    "test:jovault": "npm test",
+    "test:jovault:browser": "tsx --test tests/demo.browser.ts",
+    "jovault:build": "tsx src/cli.ts",
+    "jovault:measure": "tsx src/measure.ts",
+    "jovault:demo": "tsx demo/server.ts",
+    "check": "npm run typecheck && npm test",
+    "quality:repo": "tsx scripts/package-files.ts",
+    "format:check": "prettier --check src demo docs tests examples scripts *.json *.md .github"
+  },
+  "dependencies": {
+    "fastify": "5.12.5",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.0",
+    "@types/node": "24.19.2",
+    "esbuild": "0.28.2",
+    "prettier": "3.9.10",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3"
+  }
+}

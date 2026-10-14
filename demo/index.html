@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JoVault | JavaScript to register bytecode</title>
+    <link rel="icon" href="/jovm-mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.mjs" type="module"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="JoVault demo home"
+        ><img src="/jovm-mark.svg" alt="" width="32" height="32" /><span
+          >JoVault <small>by JoVM</small></span
+        ></a
+      >
+      <span class="local-label">Local compiler demo</span>
+    </header>
+    <main>
+      <div class="intro">
+        <h1>JavaScript, through JoVault.</h1>
+        <p>Edit a function, inspect its compiled output, and compare both executions.</p>
+      </div>
+      <div class="engine-control">
+        <label for="engine">Engine</label>
+        <select id="engine" aria-describedby="engine-note">
+          <option value="register">R0 register subset</option>
+          <option id="boa-option" value="boa" disabled>Boa checkpoint (unavailable)</option>
+        </select>
+        <p id="engine-note">
+          Boa is unavailable. The operator must configure reviewed runtime and audit files with both
+          SHA-256 pins.
+        </p>
+      </div>
+      <div class="workspace">
+        <section class="source-pane" aria-labelledby="source-heading">
+          <div class="pane-heading">
+            <h2 id="source-heading">Source</h2>
+            <button id="reset" class="quiet" type="button">Reset example</button>
+          </div>
+          <label class="sr-only" for="source">JavaScript source</label>
+          <textarea
+            id="source"
+            spellcheck="false"
+            autocapitalize="off"
+            autocomplete="off"
+            wrap="off"
+          ></textarea>
+          <pre id="print-source" class="print-code" aria-hidden="true"></pre>
+          <div class="arguments">
+            <label for="args">Arguments for <code>main</code></label
+            ><input
+              id="args"
+              type="text"
+              value="[123]"
+              spellcheck="false"
+              aria-describedby="args-help"
+            /><span id="args-help">JSON array of numbers, strings, booleans, or null.</span>
+          </div>
+          <div class="actions">
+            <button id="compile" class="primary" type="button">Compile</button
+            ><button id="native" type="button">Run JavaScript</button
+            ><button id="vm" type="button" disabled>Run JoVault</button>
+          </div>
+          <p id="status" class="status" role="status" aria-live="polite">
+            Compile the example to inspect its output.
+          </p>
+        </section>
+        <section class="output-pane" aria-labelledby="output-heading">
+          <div class="pane-heading">
+            <h2 id="output-heading">Compiled output</h2>
+            <div class="output-switch" aria-label="Output format">
+              <button id="bytecode" type="button" aria-pressed="true">Bytecode</button
+              ><button id="wrapper" type="button" aria-pressed="false">ESM wrapper</button>
+            </div>
+          </div>
+          <label class="sr-only" for="output">Compiled output</label
+          ><textarea
+            id="output"
+            readonly
+            spellcheck="false"
+            wrap="off"
+            placeholder="Your compiled bytecode will appear here."
+          ></textarea>
+          <pre id="print-output" class="print-code" aria-hidden="true"></pre>
+          <div class="results" aria-live="polite">
+            <div>
+              <h3>JavaScript</h3>
+              <output id="native-result">Not run</output
+              ><span id="native-time" class="elapsed"></span>
+            </div>
+            <div>
+              <h3>JoVault</h3>
+              <output id="vm-result">Compile first</output
+              ><span id="vm-time" class="elapsed"></span>
+            </div>
+          </div>
+          <p id="comparison" class="comparison">
+            Runs use the same arguments in separate browser workers.
+          </p>
+        </section>
+      </div>
+      <aside class="reference" aria-label="Demo limits and compiler details">
+        <p class="boundary">
+          Experimental engines. R0 supports a finite JavaScript subset; Boa uses a reviewed WASM
+          checkpoint runtime when configured. Signed packages expire within their 10-minute window.
+          Browser code and expiry checks can be inspected and patched.
+        </p>
+        <details>
+          <summary>Supported JavaScript</summary>
+          <p>
+            Export a function named <code>main</code>. R0 requires a synchronous function. In R0,
+            use primitive values, local functions, variables, arithmetic, comparisons, conditionals,
+            and bounded loops. The compiler rejects unsupported syntax. This demo supplies no host
+            imports.
+          </p>
+          <p>
+            R0 excludes objects, arrays in source, classes, DOM APIs, promises, exceptions,
+            closures, and general JavaScript modules. The arguments field is a JSON array used to
+            call <code>main</code>.
+          </p>
+          <p>
+            Boa compiles a single module named <code>/main.mjs</code>. It accepts no ambient imports
+            or host APIs. Both modes use primitive call arguments and return values. Boa has a
+            200,000-instruction context budget, a fixed Date clock at 0 ms, and a UTC timezone. It
+            provides broader language features and built-ins; full ECMAScript conformance is not
+            established.
+          </p>
+        </details>
+        <details>
+          <summary>Dialect and expiry</summary>
+          <p id="profile">
+            Compile to see the artifact format, dialect, instruction count, and expiry.
+          </p>
+          <pre id="dialect" aria-label="Compiled dialect profile"></pre>
+          <p>
+            JoVault is a separate compiler and runtime research project under JoVM. This output does
+            not use the main JoVM protocol. R0 requires a matching runtime and dialect. Boa requires
+            its pinned WASM runtime and reviewed audit. A copied browser runtime cannot enforce
+            secrecy or hard revocation.
+          </p>
+        </details>
+        <details>
+          <summary>Execution limits</summary>
+          <p>
+            Native execution runs in your browser. Boa compilation uses an isolated server worker
+            with a 5-second deadline; only one Boa compilation runs at a time. Each browser run
+            starts a fresh worker and stops after 2 seconds. Results must be primitive values and
+            are limited to 8,192 characters. Elapsed times include worker startup and are single-run
+            observations.
+          </p>
+          <p>
+            Native and R0 worker policy blocks fetch, XHR, WebSocket, and nested workers. The
+            optional Boa worker can fetch pinned assets from this demo origin and compile WASM using
+            its explicit <code>wasm-unsafe-eval</code> policy. All workers block nested workers.
+            Module imports are limited to this demo origin and blob URLs. Use code you choose to
+            run. Compilation stays on this loopback server.
+          </p>
+        </details>
+      </aside>
+    </main>
+    <footer>
+      JoVault research demo <span>R0 register modules and optional Boa checkpoints</span>
+    </footer>
+  </body>
+</html>

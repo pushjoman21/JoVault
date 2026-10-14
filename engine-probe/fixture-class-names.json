@@ -1,0 +1,169 @@
+{
+  "cases": [
+    {
+      "name": "static_name_method",
+      "feature": "Default export class NamedEvaluation timing and own name preservation",
+      "expected": true,
+      "graph": {
+        "format": "JOVLT-BOA-INPUT0",
+        "entry": "/case.mjs",
+        "modules": [
+          {
+            "id": "/case.mjs",
+            "source": "globalThis.nameReads = 0; globalThis.keyCalls = 0;\nexport default (class { static name() { return \"name method\"; } });\nimport C from \"./case.mjs\";\nexport function main() { return C.name() === \"name method\"; }\n"
+          }
+        ]
+      }
+    },
+    {
+      "name": "anonymous_class_default_name",
+      "feature": "Default export class NamedEvaluation timing and own name preservation",
+      "expected": true,
+      "graph": {
+        "format": "JOVLT-BOA-INPUT0",
+        "entry": "/case.mjs",
+        "modules": [
+          {
+            "id": "/case.mjs",
+            "source": "globalThis.nameReads = 0; globalThis.keyCalls = 0;\nexport default (class {});\nimport C from \"./case.mjs\";\nexport function main() { return C.name === \"default\"; }\n"
+          }
+        ]
+      }
+    },
+    {
+      "name": "anonymous_function_default_name",
+      "feature": "Default export class NamedEvaluation timing and own name preservation",
+      "expected": true,
+      "graph": {
+        "format": "JOVLT-BOA-INPUT0",
+        "entry": "/case.mjs",
+        "modules": [
+          {
+            "id": "/case.mjs",
+            "source": "globalThis.nameReads = 0; globalThis.keyCalls = 0;\nexport default (function () {});\nimport C from \"./case.mjs\";\nexport function main() { return C.name === \"default\"; }\n"
+          }
+        ]
+      }
+    },
+    {
+      "name": "static_name_getter",
+      "feature": "Default export class NamedEvaluation timing and own name preservation",
+      "expected": true,
+      "graph": {
+        "format": "JOVLT-BOA-INPUT0",
+        "entry": "/case.mjs",
+        "modules": [
+          {
+            "id": "/case.mjs",
+            "source": "globalThis.nameReads = 0; globalThis.keyCalls = 0;\nexport default (class { static get name() { globalThis.nameReads++; return \"getter value\"; } });\nimport C from \"./case.mjs\";\nexport function main() { return globalThis.nameReads === 0 && typeof Object.getOwnPropertyDescriptor(C, \"name\").get === \"function\" && C.name === \"getter value\" && globalThis.nameReads === 1; }\n"
+          }
+        ]
+      }
+    },
+    {
+      "name": "static_name_string_field",
+      "feature": "Default export class NamedEvaluation timing and own name preservation",
+      "expected": true,
+      "graph": {
+        "format": "JOVLT-BOA-INPUT0",
+        "entry": "/case.mjs",
+        "modules": [
+          {
+            "id": "/case.mjs",
+            "source": "globalThis.nameReads = 0; globalThis.keyCalls = 0;\nexport default (class { static name = \"field value\"; });\nimport C from \"./case.mjs\";\nexport function main() { return C.name === \"field value\"; }\n"
+          }
+        ]
+      }
+    },
+    {
+      "name": "computed_static_name_method",
+      "feature": "Default export class NamedEvaluation timing and own name preservation",
+      "expected": true,
+      "graph": {
+        "format": "JOVLT-BOA-INPUT0",
+        "entry": "/case.mjs",
+        "modules": [
+          {
+            "id": "/case.mjs",
+            "source": "globalThis.nameReads = 0; globalThis.keyCalls = 0;\nexport default (class { static [(globalThis.keyCalls++, \"name\")]() { return \"computed method\"; } });\nimport C from \"./case.mjs\";\nexport function main() { return globalThis.keyCalls === 1 && C.name() === \"computed method\"; }\n"
+          }
+        ]
+      }
+    },
+    {
+      "name": "static_field_observes_default_name",
+      "feature": "Default export class NamedEvaluation timing and own name preservation",
+      "expected": true,
+      "graph": {
+        "format": "JOVLT-BOA-INPUT0",
+        "entry": "/case.mjs",
+        "modules": [
+          {
+            "id": "/case.mjs",
+            "source": "globalThis.nameReads = 0; globalThis.keyCalls = 0;\nexport default (class { static observed = this.name; });\nimport C from \"./case.mjs\";\nexport function main() { return C.observed === \"default\" && C.name === \"default\"; }\n"
+          }
+        ]
+      }
+    },
+    {
+      "name": "static_block_deletes_name",
+      "feature": "Default export class NamedEvaluation timing and own name preservation",
+      "expected": true,
+      "graph": {
+        "format": "JOVLT-BOA-INPUT0",
+        "entry": "/case.mjs",
+        "modules": [
+          {
+            "id": "/case.mjs",
+            "source": "globalThis.nameReads = 0; globalThis.keyCalls = 0;\nexport default (class { static { delete this.name; } });\nimport C from \"./case.mjs\";\nexport function main() { return !Object.hasOwn(C, \"name\") && C.name === \"\"; }\n"
+          }
+        ]
+      }
+    },
+    {
+      "name": "static_block_locks_name",
+      "feature": "Default export class NamedEvaluation timing and own name preservation",
+      "expected": true,
+      "graph": {
+        "format": "JOVLT-BOA-INPUT0",
+        "entry": "/case.mjs",
+        "modules": [
+          {
+            "id": "/case.mjs",
+            "source": "globalThis.nameReads = 0; globalThis.keyCalls = 0;\nexport default (class { static { Object.defineProperty(this, \"name\", {value: \"locked\", configurable: false}); } });\nimport C from \"./case.mjs\";\nexport function main() { return C.name === \"locked\" && Object.getOwnPropertyDescriptor(C, \"name\").configurable === false; }\n"
+          }
+        ]
+      }
+    },
+    {
+      "name": "named_class_expression_control",
+      "feature": "Default export class NamedEvaluation timing and own name preservation",
+      "expected": true,
+      "graph": {
+        "format": "JOVLT-BOA-INPUT0",
+        "entry": "/case.mjs",
+        "modules": [
+          {
+            "id": "/case.mjs",
+            "source": "globalThis.nameReads = 0; globalThis.keyCalls = 0;\nexport default (class Original { static observed = this.name; });\nimport C from \"./case.mjs\";\nexport function main() { return C.name === \"Original\" && C.observed === \"Original\"; }\n"
+          }
+        ]
+      }
+    },
+    {
+      "name": "default_class_declaration_control",
+      "feature": "Default export class NamedEvaluation timing and own name preservation",
+      "expected": true,
+      "graph": {
+        "format": "JOVLT-BOA-INPUT0",
+        "entry": "/case.mjs",
+        "modules": [
+          {
+            "id": "/case.mjs",
+            "source": "globalThis.nameReads = 0; globalThis.keyCalls = 0;\nexport default class { static name() { return \"declaration method\"; } };\nimport C from \"./case.mjs\";\nexport function main() { return C.name() === \"declaration method\"; }\n"
+          }
+        ]
+      }
+    }
+  ]
+}

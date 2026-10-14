@@ -1,0 +1,11 @@
+/target/
+/evidence/
+/results.json
+/graph-results.json
+/argument-results.json
+/argument-inventory.json
+/input-inventory.json
+/audit/target/
+/patches/vendor/
+/patches/vendor-budget/
+/patches/crate-cache/

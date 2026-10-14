@@ -1,0 +1,949 @@
+{
+  "schema": "jovault-standalone-origin-v1",
+  "status": "private-working-tree-snapshot",
+  "sourceRepository": "https://github.com/pushjoman21/JoVM",
+  "sourceBaseCommit": "45b41ade5ae93be32c266e8d56dac19e633025ac",
+  "sourceState": "working-tree snapshot after the base commit; current files are identified by SHA-256, not claimed to exist at that commit",
+  "sourceInputs": [
+    {
+      "source": "package.json",
+      "sourceSha256": "56fcc5ecb96cf2a6004aa0bd66780374f4d2a5726b1f1e27cfb4a1d34f869e42"
+    },
+    {
+      "source": "package-lock.json",
+      "sourceSha256": "05d9bebd41494cb60d2ee69364ca82cff8dc4401caa44198ddf35fac65d122b2"
+    },
+    {
+      "source": "tsconfig.json",
+      "sourceSha256": "e9ca0fc9a613e25f5c9e66f39f22414615c621fd03f2e0aca877a2c14ba57ce3"
+    },
+    {
+      "source": ".github/workflows/jovault-engine-probe.yml",
+      "sourceSha256": "fd78b3fdcacd8b32da796d5e711ab3fa17f17537862def717020af63bd3d00d5"
+    }
+  ],
+  "files": [
+    {
+      "source": "side_pr/JoVault/README.md",
+      "destination": "README.md",
+      "sourceSha256": "670e662226653dd2c5de3e502a66707d4899c5e9de130245d073d791e64e1cb4",
+      "destinationSha256": "314a994a3e197192bd8b85bc665d324b85ad10309a6dd0c46f8855b6d9c3b807",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": [
+        {
+          "from": "Use the repository's Node/npm prerequisites and lockfile. No additional dependency\ninstallation or package publication is required. Run these commands from the root:",
+          "to": "This standalone repository requires Node.js >=24.11.0 <25 and npm. Install the pinned\ndependencies from its lockfile and run these commands from this directory:",
+          "reason": "Standalone installation instructions."
+        },
+        {
+          "from": "side_pr/JoVault/examples/algorithm.mjs",
+          "to": "examples/algorithm.mjs",
+          "reason": "Standalone example location."
+        },
+        {
+          "from": "artifacts/jovault-example",
+          "to": "jovault-example",
+          "reason": "Use a new output whose parent already exists."
+        },
+        {
+          "from": "npm run jovault:measure -- artifacts/jovault-cost-pilot.json",
+          "to": "npm run jovault:measure -- jovault-cost-pilot.json",
+          "reason": "Use a new output whose parent already exists."
+        }
+      ]
+    },
+    {
+      "source": "side_pr/JoVault/demo/app.mjs",
+      "destination": "demo/app.mjs",
+      "sourceSha256": "cd23c39344c80f8105bda00194875c244b2b43c97941f652e4a364c740cd6e0f",
+      "destinationSha256": "cd23c39344c80f8105bda00194875c244b2b43c97941f652e4a364c740cd6e0f",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/demo/index.html",
+      "destination": "demo/index.html",
+      "sourceSha256": "dce5202b483dbba69ee349b7e41904c356fd9355b7c648ca0aeee4f992856120",
+      "destinationSha256": "dce5202b483dbba69ee349b7e41904c356fd9355b7c648ca0aeee4f992856120",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/demo/runner.mjs",
+      "destination": "demo/runner.mjs",
+      "sourceSha256": "475ffb72c9f717b9e9ce60b7c12543618e1dcf7ddf1127b766397148a1acb609",
+      "destinationSha256": "475ffb72c9f717b9e9ce60b7c12543618e1dcf7ddf1127b766397148a1acb609",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/demo/server.ts",
+      "destination": "demo/server.ts",
+      "sourceSha256": "2b6be24f2787c9a0489e66193cc7eb583c1b0d9d2b1faba1bb8f8d76dc8654b0",
+      "destinationSha256": "3616c6a3998d23542720fcad3c9e0aa474636984c4197771cf96fab9549aa4d9",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": [
+        {
+          "from": "../../../blog/assets/jovm-mark.svg",
+          "to": "../assets/jovm-mark.svg",
+          "reason": "Resolve the identical licensed brand asset within this repository."
+        },
+        {
+          "kind": "format",
+          "tool": "prettier@3.9.10",
+          "reason": "Keep the standalone format check passing after local path rewriting or inherited layout."
+        }
+      ]
+    },
+    {
+      "source": "side_pr/JoVault/demo/style.css",
+      "destination": "demo/style.css",
+      "sourceSha256": "378258c4a5035fa71e227b0be839fb1b0115f2e203cea63cd299fcd3524940e1",
+      "destinationSha256": "378258c4a5035fa71e227b0be839fb1b0115f2e203cea63cd299fcd3524940e1",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/docs/ARCHITECTURE.md",
+      "destination": "docs/ARCHITECTURE.md",
+      "sourceSha256": "60e5f75e92db110d8427078f4dc3511c1296d09ccfcc2b4d76c3f3d78e8c9468",
+      "destinationSha256": "60e5f75e92db110d8427078f4dc3511c1296d09ccfcc2b4d76c3f3d78e8c9468",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/docs/COMPATIBILITY.md",
+      "destination": "docs/COMPATIBILITY.md",
+      "sourceSha256": "90a19b7a1a1edfbf6774cd87d6a90a844037f4e75d652dc02c8dd1cbb8c19866",
+      "destinationSha256": "90a19b7a1a1edfbf6774cd87d6a90a844037f4e75d652dc02c8dd1cbb8c19866",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/docs/RESEARCH.md",
+      "destination": "docs/RESEARCH.md",
+      "sourceSha256": "f78348c93bae1d0ff07a03da8bf19a51a14d81ed46e265bce189dbe294d1bd9b",
+      "destinationSha256": "f78348c93bae1d0ff07a03da8bf19a51a14d81ed46e265bce189dbe294d1bd9b",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/docs/ROADMAP.md",
+      "destination": "docs/ROADMAP.md",
+      "sourceSha256": "66b2b836f1e6e72d6cda524c534c22c25a819549a8178b6ef44d5a15bd3c10f4",
+      "destinationSha256": "66b2b836f1e6e72d6cda524c534c22c25a819549a8178b6ef44d5a15bd3c10f4",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/docs/VALIDATION.md",
+      "destination": "docs/VALIDATION.md",
+      "sourceSha256": "90464ea8c1c260d9072bfd1afeec5d2a29b1367b342cfa778d02f5aa6ff6e704",
+      "destinationSha256": "90464ea8c1c260d9072bfd1afeec5d2a29b1367b342cfa778d02f5aa6ff6e704",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/docs/results.json",
+      "destination": "docs/results.json",
+      "sourceSha256": "39c411c4f1b5154859d54d3ba1ba4989b8ceeb603f8841425bdf84eab88f6629",
+      "destinationSha256": "39c411c4f1b5154859d54d3ba1ba4989b8ceeb603f8841425bdf84eab88f6629",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/.gitignore",
+      "destination": "engine-probe/.gitignore",
+      "sourceSha256": "a62fb20d6db036e2383b5738ed043efc05f4dcf0758126bc83b78c38491cfd71",
+      "destinationSha256": "a62fb20d6db036e2383b5738ed043efc05f4dcf0758126bc83b78c38491cfd71",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/Cargo.lock",
+      "destination": "engine-probe/Cargo.lock",
+      "sourceSha256": "9cb14f2bd8e509787e789fb9dc1df802e02eb6b944bb4eb9d2d72a38b2588d11",
+      "destinationSha256": "9cb14f2bd8e509787e789fb9dc1df802e02eb6b944bb4eb9d2d72a38b2588d11",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/Cargo.toml",
+      "destination": "engine-probe/Cargo.toml",
+      "sourceSha256": "3c33300bba219ba650cbc0a8ef210f25b05e0c8162d375a8517693c40b0d8e1e",
+      "destinationSha256": "3c33300bba219ba650cbc0a8ef210f25b05e0c8162d375a8517693c40b0d8e1e",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/README.md",
+      "destination": "engine-probe/README.md",
+      "sourceSha256": "de2981048db332c41ee67e875e4d4f79318fcbd46c9bb0ea08472cce38661a14",
+      "destinationSha256": "de2981048db332c41ee67e875e4d4f79318fcbd46c9bb0ea08472cce38661a14",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/args-probe.mjs",
+      "destination": "engine-probe/args-probe.mjs",
+      "sourceSha256": "424972d7bea97fff44d0c84c24a6f1c69e54c7ab35b38d48fe82b2504a5877d5",
+      "destinationSha256": "424972d7bea97fff44d0c84c24a6f1c69e54c7ab35b38d48fe82b2504a5877d5",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/audit/Cargo.lock",
+      "destination": "engine-probe/audit/Cargo.lock",
+      "sourceSha256": "abd9aec93933719ed2cbcd0bc6c2a340c1fc328d87ccd34b3e18b2b11600ac5b",
+      "destinationSha256": "abd9aec93933719ed2cbcd0bc6c2a340c1fc328d87ccd34b3e18b2b11600ac5b",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/audit/Cargo.toml",
+      "destination": "engine-probe/audit/Cargo.toml",
+      "sourceSha256": "696d66cfdd11a0d3de237c20aa54f9dba1389f735a8934c6fd3f65921076750b",
+      "destinationSha256": "1cb5552778c5ea1b4d44ad82c8e0835aa1f9d78467aa13bb456289a7be408e94",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": [
+        {
+          "kind": "line-endings",
+          "reason": "LF bytes match standalone checkout attributes before destination hashing."
+        }
+      ]
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/audit/src/main.rs",
+      "destination": "engine-probe/audit/src/main.rs",
+      "sourceSha256": "e3088a67aef883ebf048b3b325dff1f98eee3b48ac4eb583d7fa8da7b07ffcfd",
+      "destinationSha256": "e3088a67aef883ebf048b3b325dff1f98eee3b48ac4eb583d7fa8da7b07ffcfd",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/class-name-probe.mjs",
+      "destination": "engine-probe/class-name-probe.mjs",
+      "sourceSha256": "b3b1d4e3f4036cab558244b885741025232142324059e9b7b3f61b575cdd1b99",
+      "destinationSha256": "b3b1d4e3f4036cab558244b885741025232142324059e9b7b3f61b575cdd1b99",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/conformance/LICENSE.test262",
+      "destination": "engine-probe/conformance/LICENSE.test262",
+      "sourceSha256": "4dd9244dfe8197c75348c4b24ab53d29d3b1cfad143ac76b5a3d8942aa354ce0",
+      "destinationSha256": "4dd9244dfe8197c75348c4b24ab53d29d3b1cfad143ac76b5a3d8942aa354ce0",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/conformance/README.md",
+      "destination": "engine-probe/conformance/README.md",
+      "sourceSha256": "f86f18ae9710ae7e73e7fdea291b3055c6e21240f5fcb2d34f61fa4425dc30a2",
+      "destinationSha256": "f86f18ae9710ae7e73e7fdea291b3055c6e21240f5fcb2d34f61fa4425dc30a2",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/conformance/cases.json",
+      "destination": "engine-probe/conformance/cases.json",
+      "sourceSha256": "8d81510a895fd046621f6467e43d0f391060a7592e5406d3627e81ac6cbeb1f2",
+      "destinationSha256": "8d81510a895fd046621f6467e43d0f391060a7592e5406d3627e81ac6cbeb1f2",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/conformance/checkpoint.mjs",
+      "destination": "engine-probe/conformance/checkpoint.mjs",
+      "sourceSha256": "d12496f7acca3925cc32a395a28745badd0d3221c912ac584804b57a9091c9b4",
+      "destinationSha256": "d12496f7acca3925cc32a395a28745badd0d3221c912ac584804b57a9091c9b4",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/conformance/classification-summary.json",
+      "destination": "engine-probe/conformance/classification-summary.json",
+      "sourceSha256": "8c6c6658e5bd2466f820286665de99d46de6c187a6304d0e1dbf99ef1c13e6c4",
+      "destinationSha256": "8c6c6658e5bd2466f820286665de99d46de6c187a6304d0e1dbf99ef1c13e6c4",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/conformance/profile.json",
+      "destination": "engine-probe/conformance/profile.json",
+      "sourceSha256": "45c3ffbd3f9255d12cd014d746198a9852253cf3523cb3c6dff775aeffe7fc58",
+      "destinationSha256": "45c3ffbd3f9255d12cd014d746198a9852253cf3523cb3c6dff775aeffe7fc58",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/conformance/runner.mjs",
+      "destination": "engine-probe/conformance/runner.mjs",
+      "sourceSha256": "fbb2c906b6ccf8cbe57766d93fc1d906995227175bdca46fd5952728a45f7a3b",
+      "destinationSha256": "fbb2c906b6ccf8cbe57766d93fc1d906995227175bdca46fd5952728a45f7a3b",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/conformance/verify-cases.mjs",
+      "destination": "engine-probe/conformance/verify-cases.mjs",
+      "sourceSha256": "e400f465ac5d52bc5adca1fc0da2f7ee4758ad296276ff708071181f4b90d51f",
+      "destinationSha256": "e400f465ac5d52bc5adca1fc0da2f7ee4758ad296276ff708071181f4b90d51f",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/fixture-class-names.json",
+      "destination": "engine-probe/fixture-class-names.json",
+      "sourceSha256": "4494c9c9d0a688c4d58124784ca9ff1c0cd70f7e8112f94560bbcf29bdbb5781",
+      "destinationSha256": "4494c9c9d0a688c4d58124784ca9ff1c0cd70f7e8112f94560bbcf29bdbb5781",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/fixture-graphs.json",
+      "destination": "engine-probe/fixture-graphs.json",
+      "sourceSha256": "fff094d20bdd7ac067ea9bb2ab5e5eda5c91030a2365f653cb1c53d075975eb0",
+      "destinationSha256": "fff094d20bdd7ac067ea9bb2ab5e5eda5c91030a2365f653cb1c53d075975eb0",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/graph-probe.mjs",
+      "destination": "engine-probe/graph-probe.mjs",
+      "sourceSha256": "2c421d84d65e34429209d1b4d4de0517a6a06b7cb2d7dd63a19fd3f047148684",
+      "destinationSha256": "2c421d84d65e34429209d1b4d4de0517a6a06b7cb2d7dd63a19fd3f047148684",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/patches/apply.py",
+      "destination": "engine-probe/patches/apply.py",
+      "sourceSha256": "c2cf212c845ae4907bd586bbe87326ef04f5c3c9838ba86ab8a8089e63c07e78",
+      "destinationSha256": "c2cf212c845ae4907bd586bbe87326ef04f5c3c9838ba86ab8a8089e63c07e78",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/patches/boa_engine-0.22.0.patch",
+      "destination": "engine-probe/patches/boa_engine-0.22.0.patch",
+      "sourceSha256": "bf28f820d86569a048146492eb7410e8a69a1bdd10adb8cd17e38d460892c224",
+      "destinationSha256": "bf28f820d86569a048146492eb7410e8a69a1bdd10adb8cd17e38d460892c224",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/patches/boa_parser-0.22.0.patch",
+      "destination": "engine-probe/patches/boa_parser-0.22.0.patch",
+      "sourceSha256": "605720d84551e233746ad11c117760f715db24b0de833ab02ee9111d52b0d2ff",
+      "destinationSha256": "605720d84551e233746ad11c117760f715db24b0de833ab02ee9111d52b0d2ff",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/patches/manifest.json",
+      "destination": "engine-probe/patches/manifest.json",
+      "sourceSha256": "ca6baa7bf0427ae12571daa09c42fe3a24dbe2096c7a48cac362bdfd775b9f06",
+      "destinationSha256": "ca6baa7bf0427ae12571daa09c42fe3a24dbe2096c7a48cac362bdfd775b9f06",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/probe.mjs",
+      "destination": "engine-probe/probe.mjs",
+      "sourceSha256": "805f3d4b0f3c8b96b2db17b6b3857d51af0e54c57981cbddba8f1d4f3e9f67b8",
+      "destinationSha256": "805f3d4b0f3c8b96b2db17b6b3857d51af0e54c57981cbddba8f1d4f3e9f67b8",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/engine-probe/src/lib.rs",
+      "destination": "engine-probe/src/lib.rs",
+      "sourceSha256": "5e3425d977b9f22537a2882b5b396b6dc319d8a13b923d3f6c22cad309b92bb4",
+      "destinationSha256": "5e3425d977b9f22537a2882b5b396b6dc319d8a13b923d3f6c22cad309b92bb4",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/examples/algorithm.mjs",
+      "destination": "examples/algorithm.mjs",
+      "sourceSha256": "42e0752f4d43ebae60d08627167d6e3344bf99fb73d146e382112ed651a2833c",
+      "destinationSha256": "42e0752f4d43ebae60d08627167d6e3344bf99fb73d146e382112ed651a2833c",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/examples/native-host.mjs",
+      "destination": "examples/native-host.mjs",
+      "sourceSha256": "09632d8fd759c09da45880d1454b383d4d7625f8dfdf3ef691b6a0612b36f2eb",
+      "destinationSha256": "09632d8fd759c09da45880d1454b383d4d7625f8dfdf3ef691b6a0612b36f2eb",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/src/boa-checkpoint.ts",
+      "destination": "src/boa-checkpoint.ts",
+      "sourceSha256": "2eb55e9b6b71f7036b033f0f8e52f0c8c85de97e7a295b8385899a92200c607e",
+      "destinationSha256": "2eb55e9b6b71f7036b033f0f8e52f0c8c85de97e7a295b8385899a92200c607e",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/src/boa-compiler-node.ts",
+      "destination": "src/boa-compiler-node.ts",
+      "sourceSha256": "6729f741987a9434d4d4a88a36557b691ac5ac0446a48736d8ec23cb04408722",
+      "destinationSha256": "6729f741987a9434d4d4a88a36557b691ac5ac0446a48736d8ec23cb04408722",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/src/boa-compiler-worker.ts",
+      "destination": "src/boa-compiler-worker.ts",
+      "sourceSha256": "900646fe725ecc6bdb5ddb8016937e76dcd27da014ccbfa5648a11ceb2ba1d1c",
+      "destinationSha256": "900646fe725ecc6bdb5ddb8016937e76dcd27da014ccbfa5648a11ceb2ba1d1c",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/src/cli.ts",
+      "destination": "src/cli.ts",
+      "sourceSha256": "b95df02dd75c350a5fd5e9148840a4b1d5d6c549aedf5be9219edb14c3c9eaf3",
+      "destinationSha256": "b95df02dd75c350a5fd5e9148840a4b1d5d6c549aedf5be9219edb14c3c9eaf3",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/src/frontend.ts",
+      "destination": "src/frontend.ts",
+      "sourceSha256": "c719c97a4f73be86d662426b9f7274c356412bf68e59fa7c9b796cd3d9408fae",
+      "destinationSha256": "5221dad1913f4c2034ab76855c375af4d245681c4a76be3002a5e61a17266a98",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": [
+        {
+          "from": "../../../src/vm/random.js",
+          "to": "./random.js",
+          "reason": "Resolve the unchanged copied random helper within this repository."
+        }
+      ]
+    },
+    {
+      "source": "side_pr/JoVault/src/index.ts",
+      "destination": "src/index.ts",
+      "sourceSha256": "af5517136e53d178690bed000fbdcb121c14452271a2bf42a279c2b978ce7640",
+      "destinationSha256": "af5517136e53d178690bed000fbdcb121c14452271a2bf42a279c2b978ce7640",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/src/ir.ts",
+      "destination": "src/ir.ts",
+      "sourceSha256": "8a4069a6d69f7de5b2a7c5ae8d2340bbe45b4f979a0f11e66300168d1004e189",
+      "destinationSha256": "8a4069a6d69f7de5b2a7c5ae8d2340bbe45b4f979a0f11e66300168d1004e189",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/src/measure.ts",
+      "destination": "src/measure.ts",
+      "sourceSha256": "4b8df2e71b74f64729b2671fd893bb0538b917af2b1be19dd47671d2d8d0ed86",
+      "destinationSha256": "4b8df2e71b74f64729b2671fd893bb0538b917af2b1be19dd47671d2d8d0ed86",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/src/module-graph-node.ts",
+      "destination": "src/module-graph-node.ts",
+      "sourceSha256": "60805b4bc22a6319f933f1a69e2b731347d7b8902ad37342c31d3ac9f50b238f",
+      "destinationSha256": "60805b4bc22a6319f933f1a69e2b731347d7b8902ad37342c31d3ac9f50b238f",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/src/module-graph.ts",
+      "destination": "src/module-graph.ts",
+      "sourceSha256": "dbf7121afdfb8f93477d95dd35fc44922427b51ae8814fcc1560660a7ff0aec3",
+      "destinationSha256": "dbf7121afdfb8f93477d95dd35fc44922427b51ae8814fcc1560660a7ff0aec3",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/src/package-loader.ts",
+      "destination": "src/package-loader.ts",
+      "sourceSha256": "aeea4e7b7f2291aef9f7c325e07deba850538fe3c7a55a4a6e21f681674d833c",
+      "destinationSha256": "aeea4e7b7f2291aef9f7c325e07deba850538fe3c7a55a4a6e21f681674d833c",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/src/package-signing.ts",
+      "destination": "src/package-signing.ts",
+      "sourceSha256": "2a60c781c67f17fb972ef4cddc12339d3e7f139c7d4b8c71e20efd8124d9d672",
+      "destinationSha256": "2a60c781c67f17fb972ef4cddc12339d3e7f139c7d4b8c71e20efd8124d9d672",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/src/package.ts",
+      "destination": "src/package.ts",
+      "sourceSha256": "b618c5f286d2a8a5bf27c682226862703c66244fce297e844f8dbf93c4cf3bed",
+      "destinationSha256": "b618c5f286d2a8a5bf27c682226862703c66244fce297e844f8dbf93c4cf3bed",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/src/register-compiler.ts",
+      "destination": "src/register-compiler.ts",
+      "sourceSha256": "a1addaf823fc41b6bf45fc5ae8c7b09e267cead56ee58ee4b3b7749ac9ad653a",
+      "destinationSha256": "b5a7c78241fbd0f77992e923ea60f88bbcd625542f6cf6675c850154d244b9cf",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": [
+        {
+          "from": "../../../src/vm/random.js",
+          "to": "./random.js",
+          "reason": "Resolve the unchanged copied random helper within this repository."
+        }
+      ]
+    },
+    {
+      "source": "side_pr/JoVault/src/register-contract.ts",
+      "destination": "src/register-contract.ts",
+      "sourceSha256": "7756d67d18a3d8af037a7b2918e4b29d1cd712b620ac9997cbf9c235cc5e5824",
+      "destinationSha256": "7756d67d18a3d8af037a7b2918e4b29d1cd712b620ac9997cbf9c235cc5e5824",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/src/register-runtime.ts",
+      "destination": "src/register-runtime.ts",
+      "sourceSha256": "e4a00248224335f56085413da70b738a20aa632a05bfe99b35dc38a980e1fe83",
+      "destinationSha256": "e4a00248224335f56085413da70b738a20aa632a05bfe99b35dc38a980e1fe83",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/boa-checkpoint.test.ts",
+      "destination": "tests/boa-checkpoint.test.ts",
+      "sourceSha256": "33fb3e48c446ab7724809e0339905c5587fbe11f77043f298157a21041ec21d9",
+      "destinationSha256": "33fb3e48c446ab7724809e0339905c5587fbe11f77043f298157a21041ec21d9",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/boa-compiler.test.ts",
+      "destination": "tests/boa-compiler.test.ts",
+      "sourceSha256": "a3fba05ba419edb2a9380ff445ffcd2d00153eb00aff20f69e04d759e7ae6238",
+      "destinationSha256": "a3fba05ba419edb2a9380ff445ffcd2d00153eb00aff20f69e04d759e7ae6238",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/cli.test.ts",
+      "destination": "tests/cli.test.ts",
+      "sourceSha256": "499fcc0a678c3922dc25a12b76a550a39f620509af4726f37aae06c8142d7a90",
+      "destinationSha256": "499fcc0a678c3922dc25a12b76a550a39f620509af4726f37aae06c8142d7a90",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/compiler.test.ts",
+      "destination": "tests/compiler.test.ts",
+      "sourceSha256": "208590b417f523aefe8f3cfa6096de36c83bea4ff4ed0b2179383455166486ef",
+      "destinationSha256": "208590b417f523aefe8f3cfa6096de36c83bea4ff4ed0b2179383455166486ef",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/00-arithmetic.mjs",
+      "destination": "tests/conformance-fixtures/00-arithmetic.mjs",
+      "sourceSha256": "08e6b6877434a5213b1c2b76b0eca81b8339de27b8f481ed4b683043dc46c812",
+      "destinationSha256": "08e6b6877434a5213b1c2b76b0eca81b8339de27b8f481ed4b683043dc46c812",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/01-scopes.mjs",
+      "destination": "tests/conformance-fixtures/01-scopes.mjs",
+      "sourceSha256": "7a5a2b156fd1d26984cd4925f5a60ee5dedbb4a9c959aa27986698721b31606a",
+      "destinationSha256": "7a5a2b156fd1d26984cd4925f5a60ee5dedbb4a9c959aa27986698721b31606a",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/02-closures.mjs",
+      "destination": "tests/conformance-fixtures/02-closures.mjs",
+      "sourceSha256": "f01c8552e8006fce068fb66fe37436b8f3f79af2a4197e39471bcb9a0a0e4de1",
+      "destinationSha256": "f01c8552e8006fce068fb66fe37436b8f3f79af2a4197e39471bcb9a0a0e4de1",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/03-object-getter.mjs",
+      "destination": "tests/conformance-fixtures/03-object-getter.mjs",
+      "sourceSha256": "b2fb0576c9494bf9abd4792ada7f91c875ca8397ddd03667c804cc8bfdc98a9f",
+      "destinationSha256": "b2fb0576c9494bf9abd4792ada7f91c875ca8397ddd03667c804cc8bfdc98a9f",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/04-array-spread.mjs",
+      "destination": "tests/conformance-fixtures/04-array-spread.mjs",
+      "sourceSha256": "cdc661d2d04d09a4f4c93e35ad552366ff0b79dc769ff6405f79f6bc27b86080",
+      "destinationSha256": "cdc661d2d04d09a4f4c93e35ad552366ff0b79dc769ff6405f79f6bc27b86080",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/05-runtime-tdz.mjs",
+      "destination": "tests/conformance-fixtures/05-runtime-tdz.mjs",
+      "sourceSha256": "5f182ae414c6199b1b9e88376457d9db73498d9fd273c7278017dac1f0d92243",
+      "destinationSha256": "5f182ae414c6199b1b9e88376457d9db73498d9fd273c7278017dac1f0d92243",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/06-finally.mjs",
+      "destination": "tests/conformance-fixtures/06-finally.mjs",
+      "sourceSha256": "aa02b82c820480e9f968dfec78fa7375b9048ebcafab68526de000657520b26f",
+      "destinationSha256": "aa02b82c820480e9f968dfec78fa7375b9048ebcafab68526de000657520b26f",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/07-default-rest.mjs",
+      "destination": "tests/conformance-fixtures/07-default-rest.mjs",
+      "sourceSha256": "80ffd8cc510edd20287257938b16f26ed62f47f2c64494182068d888fc50fecd",
+      "destinationSha256": "80ffd8cc510edd20287257938b16f26ed62f47f2c64494182068d888fc50fecd",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/08-class-private.mjs",
+      "destination": "tests/conformance-fixtures/08-class-private.mjs",
+      "sourceSha256": "703ef0a1cb0ca03b0a87adb5db1bc8a082dfaf096b2152235a8c0ee15583df66",
+      "destinationSha256": "703ef0a1cb0ca03b0a87adb5db1bc8a082dfaf096b2152235a8c0ee15583df66",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/09-generator.mjs",
+      "destination": "tests/conformance-fixtures/09-generator.mjs",
+      "sourceSha256": "bb8e2e32be40c547c47e2019c7ff95bdf52e3c0e9b0996dc33223776874beac5",
+      "destinationSha256": "bb8e2e32be40c547c47e2019c7ff95bdf52e3c0e9b0996dc33223776874beac5",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/10-async.mjs",
+      "destination": "tests/conformance-fixtures/10-async.mjs",
+      "sourceSha256": "5e8350506afef8add9163dbff9042d0296807141cdc58f068b3174a7f74ea702",
+      "destinationSha256": "5e8350506afef8add9163dbff9042d0296807141cdc58f068b3174a7f74ea702",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/11-forof-control.mjs",
+      "destination": "tests/conformance-fixtures/11-forof-control.mjs",
+      "sourceSha256": "8d283d570a454c771970e17dd505f0350c34f24f15dfc43fd2f2f13fad273176",
+      "destinationSha256": "8d283d570a454c771970e17dd505f0350c34f24f15dfc43fd2f2f13fad273176",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/12-switch.mjs",
+      "destination": "tests/conformance-fixtures/12-switch.mjs",
+      "sourceSha256": "1a255cb69c230e070b3f76f881f1e1c38569144c1dccb5d6515e68564aa52dca",
+      "destinationSha256": "1a255cb69c230e070b3f76f881f1e1c38569144c1dccb5d6515e68564aa52dca",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/13-optional-nullish.mjs",
+      "destination": "tests/conformance-fixtures/13-optional-nullish.mjs",
+      "sourceSha256": "53477790731e2c139b9205d01130ca132f3de44486e6ccb342403142e834e3b9",
+      "destinationSha256": "53477790731e2c139b9205d01130ca132f3de44486e6ccb342403142e834e3b9",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/14-bigint.mjs",
+      "destination": "tests/conformance-fixtures/14-bigint.mjs",
+      "sourceSha256": "c9a5bcc500d3719e4d42ff2111ed30d37b09332f5e08f1a89061ff7c963b49f4",
+      "destinationSha256": "c9a5bcc500d3719e4d42ff2111ed30d37b09332f5e08f1a89061ff7c963b49f4",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/15-symbol-property.mjs",
+      "destination": "tests/conformance-fixtures/15-symbol-property.mjs",
+      "sourceSha256": "f35e64afda5410c38935dc0a4bf30977ea9044489295dec438b0347a2f7f70d1",
+      "destinationSha256": "f35e64afda5410c38935dc0a4bf30977ea9044489295dec438b0347a2f7f70d1",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/16-map-set.mjs",
+      "destination": "tests/conformance-fixtures/16-map-set.mjs",
+      "sourceSha256": "ec3b29fd86400763bd300e6cba324bb97d94a27db5e252226862182fcacede16",
+      "destinationSha256": "ec3b29fd86400763bd300e6cba324bb97d94a27db5e252226862182fcacede16",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/17-regexp.mjs",
+      "destination": "tests/conformance-fixtures/17-regexp.mjs",
+      "sourceSha256": "1951095addd4ecb89de072a17640b8f8e3374b3b20737a36391ac285cff7eb3e",
+      "destinationSha256": "1951095addd4ecb89de072a17640b8f8e3374b3b20737a36391ac285cff7eb3e",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/18-live-dependency.mjs",
+      "destination": "tests/conformance-fixtures/18-live-dependency.mjs",
+      "sourceSha256": "0bb92f7b4ad1942aa91585c4cab9d49dff73ab4e5a24bcbbfb0f9e960300747e",
+      "destinationSha256": "0bb92f7b4ad1942aa91585c4cab9d49dff73ab4e5a24bcbbfb0f9e960300747e",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/18-live-import.mjs",
+      "destination": "tests/conformance-fixtures/18-live-import.mjs",
+      "sourceSha256": "84ab048a693c2eb40d939e36eb9ef760805c94b47b6cbb8b39a8af7601e40acd",
+      "destinationSha256": "84ab048a693c2eb40d939e36eb9ef760805c94b47b6cbb8b39a8af7601e40acd",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/19-cycle-dependency.mjs",
+      "destination": "tests/conformance-fixtures/19-cycle-dependency.mjs",
+      "sourceSha256": "ca283044d9a4ae5322a8a518b72a8572de2648b5e3f279ec116ace6fd53f8038",
+      "destinationSha256": "ca283044d9a4ae5322a8a518b72a8572de2648b5e3f279ec116ace6fd53f8038",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/19-cycle.mjs",
+      "destination": "tests/conformance-fixtures/19-cycle.mjs",
+      "sourceSha256": "888705c25c922743787abd510e2ffe1dcc273e755a5a96232551bfdbb1b27a7d",
+      "destinationSha256": "888705c25c922743787abd510e2ffe1dcc273e755a5a96232551bfdbb1b27a7d",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/conformance-fixtures/manifest.json",
+      "destination": "tests/conformance-fixtures/manifest.json",
+      "sourceSha256": "5d4ab7ca002dac992015d62a803576e0530f35b4ebbeb5874ce77c4cadbdbeba",
+      "destinationSha256": "5d4ab7ca002dac992015d62a803576e0530f35b4ebbeb5874ce77c4cadbdbeba",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/demo.browser.ts",
+      "destination": "tests/demo.browser.ts",
+      "sourceSha256": "d9800c7c77b59935161d45c8d9a475ec952600776b31250ac29acd681553a0f3",
+      "destinationSha256": "d9800c7c77b59935161d45c8d9a475ec952600776b31250ac29acd681553a0f3",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/demo.test.ts",
+      "destination": "tests/demo.test.ts",
+      "sourceSha256": "1afe68a1106572b9c581e0ffb6e7f70bc256dfa24d70e2ea69cbf076bf2908d9",
+      "destinationSha256": "1afe68a1106572b9c581e0ffb6e7f70bc256dfa24d70e2ea69cbf076bf2908d9",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/module-graph.test.ts",
+      "destination": "tests/module-graph.test.ts",
+      "sourceSha256": "24c721e011ad2f3872af550428facc17dca62728dce0ba0f76a9f1b5d94cc8fd",
+      "destinationSha256": "24c721e011ad2f3872af550428facc17dca62728dce0ba0f76a9f1b5d94cc8fd",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/modules.test.ts",
+      "destination": "tests/modules.test.ts",
+      "sourceSha256": "da27e646e7b29937020f99b864a83540ad665b6b177416fd50fe50a9139575d6",
+      "destinationSha256": "da27e646e7b29937020f99b864a83540ad665b6b177416fd50fe50a9139575d6",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/package-loader.test.ts",
+      "destination": "tests/package-loader.test.ts",
+      "sourceSha256": "dfeb393a385e35ac5d0dbd88e7df2f85f85dbc5ebfb3f25864f5074566263bc6",
+      "destinationSha256": "dfeb393a385e35ac5d0dbd88e7df2f85f85dbc5ebfb3f25864f5074566263bc6",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/package-security.test.ts",
+      "destination": "tests/package-security.test.ts",
+      "sourceSha256": "2e43310c959ef9eb254c7c3507151de1835814147bf42233cd3d326a3c51d621",
+      "destinationSha256": "2e43310c959ef9eb254c7c3507151de1835814147bf42233cd3d326a3c51d621",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/reference-runtime.ts",
+      "destination": "tests/reference-runtime.ts",
+      "sourceSha256": "ebaa401020d72c2bc14217d2a0eeb347e5b6fabb421293c310c09dfd0b94b746",
+      "destinationSha256": "ebaa401020d72c2bc14217d2a0eeb347e5b6fabb421293c310c09dfd0b94b746",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/register-compiler.test.ts",
+      "destination": "tests/register-compiler.test.ts",
+      "sourceSha256": "b6c5705bf51f670be881988a3beb16d8194c01f90e47a7ebaf0baab3f845282e",
+      "destinationSha256": "b6c5705bf51f670be881988a3beb16d8194c01f90e47a7ebaf0baab3f845282e",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/register-modules.test.ts",
+      "destination": "tests/register-modules.test.ts",
+      "sourceSha256": "5ff2173ced083ce02f6b2c87c2c13b55e68759034d0121fd4c41ba3ba279ac3c",
+      "destinationSha256": "5ff2173ced083ce02f6b2c87c2c13b55e68759034d0121fd4c41ba3ba279ac3c",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/register-runtime.test.ts",
+      "destination": "tests/register-runtime.test.ts",
+      "sourceSha256": "0317e3665f22aafd83869ee8de87ec7ecd50774e21b67a8292b196e2f95bbd23",
+      "destinationSha256": "0317e3665f22aafd83869ee8de87ec7ecd50774e21b67a8292b196e2f95bbd23",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/tests/runtime.test.ts",
+      "destination": "tests/runtime.test.ts",
+      "sourceSha256": "29eb8e2a8069b03f6bac6151158a945bca5bf3c3de696482a4fb242a410f248c",
+      "destinationSha256": "29eb8e2a8069b03f6bac6151158a945bca5bf3c3de696482a4fb242a410f248c",
+      "reason": "Lift the owned JoVault source tree without an alternate implementation.",
+      "transforms": []
+    },
+    {
+      "source": "src/vm/random.ts",
+      "destination": "src/random.ts",
+      "sourceSha256": "3d68f130db790d8500318c7a180943b3d391ab97572a94058e50480c4b3d4f49",
+      "destinationSha256": "3d68f130db790d8500318c7a180943b3d391ab97572a94058e50480c4b3d4f49",
+      "reason": "Unchanged JoVM build-side random helper; deterministic variants only.",
+      "transforms": []
+    },
+    {
+      "source": "LICENSE",
+      "destination": "LICENSE",
+      "sourceSha256": "44cb943f09b08a02165d9c9c06dd248fabeb8528d69088142d15dc56433ed754",
+      "destinationSha256": "44cb943f09b08a02165d9c9c06dd248fabeb8528d69088142d15dc56433ed754",
+      "reason": "Preserve JoVM MIT attribution for copied source and brand asset.",
+      "transforms": []
+    },
+    {
+      "source": "blog/assets/jovm-mark.svg",
+      "destination": "assets/jovm-mark.svg",
+      "sourceSha256": "46d964db6d6cbd514ba3f7fde9744375be72811ad01ca456bcaf77f24a860d0c",
+      "destinationSha256": "46d964db6d6cbd514ba3f7fde9744375be72811ad01ca456bcaf77f24a860d0c",
+      "reason": "Identical existing licensed brand asset.",
+      "transforms": []
+    },
+    {
+      "source": ".prettierrc.json",
+      "destination": ".prettierrc.json",
+      "sourceSha256": "c6bc6fc6b031c97774bea2caa5e77ae85d2d02d4ea80962ffafc7a2b1f50d734",
+      "destinationSha256": "c6bc6fc6b031c97774bea2caa5e77ae85d2d02d4ea80962ffafc7a2b1f50d734",
+      "reason": "Preserve source formatting conventions.",
+      "transforms": []
+    },
+    {
+      "source": ".gitattributes",
+      "destination": ".gitattributes",
+      "sourceSha256": "744a16bdd7704a687936715a31b6dc617cce40fe92791134c1d2fd8bf8f9ab43",
+      "destinationSha256": "7c6da58c924d90e646d0b30bfccd2917770b0f44fac514e18229ad5951daeb34",
+      "reason": "Use standalone paths while preserving pinned patch whitespace and exact frozen inputs.",
+      "transforms": [
+        {
+          "from": "side_pr/JoVault/engine-probe/",
+          "to": "engine-probe/",
+          "reason": "Standalone engine directory."
+        },
+        {
+          "from": "engine-probe/conformance/LICENSE.test262 whitespace=-blank-at-eol",
+          "to": "engine-probe/conformance/LICENSE.test262 -text whitespace=-blank-at-eol",
+          "reason": "Preserve the unchanged upstream license bytes across checkout platforms."
+        },
+        {
+          "from": "*.pdf binary",
+          "to": "*.pdf binary\n# Preserve checksum-bound fixtures, patch inputs and historical measurements exactly.\ndocs/results.json -text\ntests/conformance-fixtures/** -text\nengine-probe/fixture-graphs.json -text\nengine-probe/conformance/** -text\nengine-probe/patches/** -text",
+          "reason": "Keep frozen provenance and upstream input bytes stable across Git checkouts."
+        }
+      ]
+    }
+  ],
+  "generated": [
+    {
+      "destination": "package.json",
+      "destinationSha256": "51f496f333225796741e014b68c0f02ea901ef2de7c27e0f7211a9acc53be858"
+    },
+    {
+      "destination": "package-lock.json",
+      "destinationSha256": "4513c70beee5f756df65b31ed01654f88eb383df898597ccecf6fdc9d6888214"
+    },
+    {
+      "destination": "tsconfig.json",
+      "destinationSha256": "f10aebaf88b42cecc6f0d6c6ca857811895bd74d9f545ec84dde68514d8c588d"
+    },
+    {
+      "destination": "src/format.ts",
+      "destinationSha256": "bd90a51883a942fd31796e39ccc8baac8d8c34c6029013a39a3fc40c2f0da17d"
+    },
+    {
+      "destination": "SECURITY.md",
+      "destinationSha256": "d10bbdf3ad9b23e2383b08d69929edda2780dc95a03a575d7db100a42ec66a76"
+    },
+    {
+      "destination": "CONTRIBUTING.md",
+      "destinationSha256": "86f00b75a59d61ed8263fbfbcf2a214e050b71f39b3f88c8abd8a0aa4624dfb2"
+    },
+    {
+      "destination": "CHANGELOG.md",
+      "destinationSha256": "ff0b53d6b2cc92680d65878790a858d408eea65bd68087fd94b08e8758b26d22"
+    },
+    {
+      "destination": ".gitignore",
+      "destinationSha256": "afa04a1b94799b0d1f0a5133ba53dd6a395c6e9684bb78ebef078296084ecfe7"
+    },
+    {
+      "destination": ".prettierignore",
+      "destinationSha256": "98cdfe00c03a5114436c714e9dec5d1ffb4938e326c92bf5e106ff1702e4e4f0"
+    },
+    {
+      "destination": "scripts/package-files.ts",
+      "destinationSha256": "05f8b1900a69b30c0004ea009f6868f24bf44617ef0ca98ddcc774e58de7f4d4"
+    },
+    {
+      "destination": "tests/standalone-package.test.ts",
+      "destinationSha256": "d2135d50c267cb8231a288755389aaab12c0a6f8145f8e56b69875494725c261"
+    },
+    {
+      "destination": ".github/workflows/ci.yml",
+      "destinationSha256": "d760985c149be6c648f852478c1bd142891df29bd5adb0a7b69c82814d85c88f"
+    }
+  ],
+  "excludedFromSelfHash": ["ORIGIN.json"],
+  "exclusions": [
+    {
+      "source": "side_pr/JoVault/tests/repository.test.ts",
+      "sourceSha256": "8d8fce10e046d1dc747b534c74016879805b7c3f5db940969d451ca144724862",
+      "reason": "JoVM parent allowlist integration; preserved in JoVM and replaced by standalone inventory tests here."
+    }
+  ],
+  "typeExtraction": {
+    "source": "src/vm/format.ts",
+    "sourceSha256": "a133382ab2f64af5e7868d2f5b7b0a67c848e4a10c88b19c7466fd409003bc60",
+    "destination": "src/format.ts",
+    "exactText": "export interface RandomSource {\n  byte(): number;\n}",
+    "reason": "Only the unchanged RandomSource interface is required by random.ts."
+  }
+}

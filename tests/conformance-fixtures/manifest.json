@@ -1,0 +1,59 @@
+{
+  "target": "ECMAScript 2025 (ECMA-262, 16th edition)",
+  "kind": "self-authored phase-one feature probes, not Test262 results",
+  "entryExport": "main",
+  "cases": [
+    { "file": "00-arithmetic.mjs", "feature": "primitive arithmetic control", "expected": 6 },
+    { "file": "01-scopes.mjs", "feature": "block and loop scope control", "expected": 10 },
+    {
+      "file": "02-closures.mjs",
+      "feature": "closure capture and mutable environment cells",
+      "expected": 7
+    },
+    { "file": "03-object-getter.mjs", "feature": "objects, getters and this", "expected": 3 },
+    { "file": "04-array-spread.mjs", "feature": "arrays, spread and destructuring", "expected": 6 },
+    {
+      "file": "05-runtime-tdz.mjs",
+      "feature": "runtime TDZ ReferenceError completion",
+      "expected": "ReferenceError"
+    },
+    { "file": "06-finally.mjs", "feature": "throw, catch and finally completion", "expected": 7 },
+    {
+      "file": "07-default-rest.mjs",
+      "feature": "nested functions, defaults and rest",
+      "expected": 6
+    },
+    {
+      "file": "08-class-private.mjs",
+      "feature": "class private fields and construction",
+      "expected": 4
+    },
+    {
+      "file": "09-generator.mjs",
+      "feature": "generator suspension and iterator protocol",
+      "expected": 3
+    },
+    { "file": "10-async.mjs", "feature": "async, await and Promise jobs", "expected": 7 },
+    { "file": "11-forof-control.mjs", "feature": "for-of, break and continue", "expected": 4 },
+    { "file": "12-switch.mjs", "feature": "switch fallthrough", "expected": 6 },
+    {
+      "file": "13-optional-nullish.mjs",
+      "feature": "optional chain and nullish coalescing",
+      "expected": 5
+    },
+    {
+      "file": "14-bigint.mjs",
+      "feature": "BigInt arithmetic and string conversion",
+      "expected": "3"
+    },
+    {
+      "file": "15-symbol-property.mjs",
+      "feature": "symbols and computed property keys",
+      "expected": 4
+    },
+    { "file": "16-map-set.mjs", "feature": "ECMAScript Map and Set builtins", "expected": 4 },
+    { "file": "17-regexp.mjs", "feature": "Unicode RegExp builtin", "expected": true },
+    { "file": "18-live-import.mjs", "feature": "mutable ESM live binding", "expected": 2 },
+    { "file": "19-cycle.mjs", "feature": "ESM cycle with deferred live read", "expected": 2 }
+  ]
+}

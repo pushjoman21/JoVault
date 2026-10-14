@@ -1,0 +1,25 @@
+* text=auto eol=lf
+# Unified patches preserve context whitespace; the applier checks their exact hashes.
+engine-probe/patches/*.patch whitespace=-blank-at-eol
+# Keep the original Test262 license bytes for pinned source verification.
+engine-probe/conformance/LICENSE.test262 -text whitespace=-blank-at-eol
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.wasm binary
+*.sqlite binary
+*.db binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.zip binary
+*.gz binary
+*.pdf binary
+# Preserve checksum-bound fixtures, patch inputs and historical measurements exactly.
+docs/results.json -text
+tests/conformance-fixtures/** -text
+engine-probe/fixture-graphs.json -text
+engine-probe/conformance/** -text
+engine-probe/patches/** -text

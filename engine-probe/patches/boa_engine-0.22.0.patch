@@ -1,0 +1,920 @@
+--- a/boa_engine-0.22.0/Cargo.toml
++++ b/boa_engine-0.22.0/Cargo.toml
+@@ -42,6 +42,8 @@
+ all-features = true
+ 
+ [features]
++# Enables the context-lifetime dispatch counter without fuzzing dependencies.
++instruction-budget = []
+ annex-b = [
+     "boa_ast/annex-b",
+     "boa_parser/annex-b",
+--- a/boa_engine-0.22.0/Cargo.toml.orig
++++ b/boa_engine-0.22.0/Cargo.toml.orig
+@@ -12,6 +12,8 @@
+ rust-version.workspace = true
+ 
+ [features]
++# Enables the context-lifetime dispatch counter without fuzzing dependencies.
++instruction-budget = []
+ default = ["float16", "xsum", "temporal"]
+ 
+ embedded_lz4 = ["boa_macros/embedded_lz4", "lz4_flex"]
+--- a/boa_engine-0.22.0/src/builtins/eval/mod.rs
++++ b/boa_engine-0.22.0/src/builtins/eval/mod.rs
+@@ -125,6 +125,7 @@
+         let source = Source::from_utf16(&x);
+ 
+         let mut parser = Parser::new(source);
++        parser.set_source_text_retention(context.retains_source_text());
+         parser.set_identifier(context.next_parser_identifier());
+         if strict {
+             parser.set_strict();
+@@ -271,7 +272,12 @@
+ 
+         let in_with = context.vm.frame().environments.has_object_environment();
+ 
+-        let source_text = SourceText::new(source);
++        let source_text = if context.retains_source_text() {
++            SourceText::new(source)
++        } else {
++            // None is required: Some(empty) cannot be sliced using real spans.
++            SourceText::default()
++        };
+         let spanned_source_text = SpannedSourceText::new_source_only(source_text);
+ 
+         let mut compiler = ByteCompiler::new(
+--- a/boa_engine-0.22.0/src/builtins/function/mod.rs
++++ b/boa_engine-0.22.0/src/builtins/function/mod.rs
+@@ -495,6 +495,7 @@
+             .flatten()
+             .collect::<Vec<_>>();
+             let mut parser = Parser::new(Source::from_utf16(&parameters));
++            parser.set_source_text_retention(context.retains_source_text());
+             parser.set_identifier(context.next_parser_identifier());
+ 
+             // 17. Let parameters be ParseText(StringToCodePoints(P), parameterSym).
+@@ -544,6 +545,7 @@
+             // 19. Let body be ParseText(StringToCodePoints(bodyParseString), bodySym).
+             // 20. If body is a List of errors, throw a SyntaxError exception.
+             let mut parser = Parser::new(Source::from_utf16(&body_parse));
++            parser.set_source_text_retention(context.retains_source_text());
+             parser.set_identifier(context.next_parser_identifier());
+ 
+             // 19. Let body be ParseText(StringToCodePoints(bodyParseString), bodySym).
+@@ -876,12 +878,20 @@
+             return Ok(js_string!("function () { [native code] }").into());
+         }
+ 
++        let callable = JsFunction::from_object(object.clone())
++            .ok_or_else(|| JsNativeError::typ().with_message("not a function"))?;
++        let source_available = context
++            .host_hooks()
++            .has_source_text_available(&callable, context);
++
+         let function = object
+             .downcast_ref::<OrdinaryFunction>()
+             .ok_or_else(|| JsNativeError::typ().with_message("not a function"))?;
+ 
+         let code = function.codeblock();
+-        if let Some(code_points) = code.source_info().text_spanned().to_code_points() {
++        if source_available
++            && let Some(code_points) = code.source_info().text_spanned().to_code_points()
++        {
+             return Ok(JsString::from(code_points).into());
+         }
+ 
+--- a/boa_engine-0.22.0/src/bytecompiler/class.rs
++++ b/boa_engine-0.22.0/src/bytecompiler/class.rs
+@@ -80,6 +80,17 @@
+     /// A class declaration binds the resulting class object to it's identifier.
+     /// A class expression leaves the resulting class object on the stack for following operations.
+     pub(crate) fn compile_class(&mut self, class: ClassSpec<'_>, dst: Option<&Register>) {
++        self.compile_class_with_name(class, dst, Sym::EMPTY_STRING);
++    }
++
++    /// Supplies an inferred constructor name before static class elements run.
++    /// This does not introduce a class binding for an anonymous expression.
++    pub(crate) fn compile_class_with_name(
++        &mut self,
++        class: ClassSpec<'_>,
++        dst: Option<&Register>,
++        inferred_name: Sym,
++    ) {
+         // 11.2.2 Strict Mode Code - <https://tc39.es/ecma262/#sec-strict-mode-code>
+         //  - All parts of a ClassDeclaration or a ClassExpression are strict mode code.
+         let strict = self.strict();
+@@ -87,7 +98,7 @@
+ 
+         let class_name = class
+             .name
+-            .map_or(Sym::EMPTY_STRING, Identifier::sym)
++            .map_or(inferred_name, Identifier::sym)
+             .to_js_string(self.interner());
+ 
+         let outer_scope = self.push_declarative_scope(class.name_scope);
+--- a/boa_engine-0.22.0/src/bytecompiler/module.rs
++++ b/boa_engine-0.22.0/src/bytecompiler/module.rs
+@@ -1,6 +1,6 @@
+ use super::{ByteCompiler, Literal, ToJsString};
+ use crate::vm::opcode::BindingOpcode;
+-use boa_ast::{ModuleItem, ModuleItemList, declaration::ExportDeclaration};
++use boa_ast::{Expression, ModuleItem, ModuleItemList, declaration::ExportDeclaration};
+ use boa_interner::Sym;
+ 
+ impl ByteCompiler<'_> {
+@@ -66,21 +66,33 @@
+                     }
+                     ExportDeclaration::DefaultAssignmentExpression(expr) => {
+                         let function = self.register_allocator.alloc();
+-                        self.compile_expr(expr, &function);
++                        if let Expression::ClassExpression(class) = expr.flatten()
++                            && class.name().is_none()
++                        {
++                            // NamedEvaluation names the constructor before class elements
++                            // define or delete their own `name` property.
++                            self.compile_class_with_name(
++                                class.as_ref().into(),
++                                Some(&function),
++                                Sym::DEFAULT,
++                            );
++                        } else {
++                            self.compile_expr(expr, &function);
+ 
+-                        if expr.is_anonymous_function_definition() {
+-                            let default = self
+-                                .interner()
+-                                .resolve_expect(Sym::DEFAULT)
+-                                .into_common(false);
+-                            let key = self.register_allocator.alloc();
+-                            self.emit_store_literal(Literal::String(default), &key);
+-                            self.bytecode.emit_set_function_name(
+-                                function.variable(),
+-                                key.variable(),
+-                                0u32.into(),
+-                            );
+-                            self.register_allocator.dealloc(key);
++                            if expr.is_anonymous_function_definition() {
++                                let default = self
++                                    .interner()
++                                    .resolve_expect(Sym::DEFAULT)
++                                    .into_common(false);
++                                let key = self.register_allocator.alloc();
++                                self.emit_store_literal(Literal::String(default), &key);
++                                self.bytecode.emit_set_function_name(
++                                    function.variable(),
++                                    key.variable(),
++                                    0u32.into(),
++                                );
++                                self.register_allocator.dealloc(key);
++                            }
+                         }
+ 
+                         let name = Sym::DEFAULT_EXPORT.to_js_string(self.interner());
+--- /dev/null
++++ b/boa_engine-0.22.0/src/class_name_tests.rs
+@@ -0,0 +1,167 @@
++//! Default-export anonymous class NamedEvaluation regressions.
++use crate::builtins::promise::PromiseState;
++use crate::context::time::FixedClock;
++use crate::module::MapModuleLoader;
++use crate::{Context, JsValue, Module, Source, js_string};
++use std::{path::Path, rc::Rc};
++
++fn check(source: &str) {
++    let loader = Rc::new(MapModuleLoader::new());
++    let builder = Context::builder()
++        .retain_source_text(false)
++        .clock(Rc::new(FixedClock::default()))
++        .module_loader(loader.clone());
++    #[cfg(feature = "instruction-budget")]
++    let builder = builder.instructions_remaining(200_000);
++    let mut context = builder.build().unwrap();
++    let module = Module::parse(
++        Source::from_bytes(source).with_path(Path::new("/case.mjs")),
++        None,
++        &mut context,
++    )
++    .unwrap();
++    loader.insert("/case.mjs", module.clone());
++    let loaded = module.load(&mut context);
++    context.run_jobs().unwrap();
++    assert!(matches!(loaded.state(), PromiseState::Fulfilled(_)));
++    module.link(&mut context).unwrap();
++    let evaluated = module.evaluate(&mut context).unwrap();
++    context.run_jobs().unwrap();
++    assert!(
++        matches!(evaluated.state(), PromiseState::Fulfilled(_)),
++        "{:?}",
++        evaluated.state()
++    );
++    let main = module
++        .get_value(js_string!("main"), &mut context)
++        .unwrap()
++        .as_callable()
++        .unwrap();
++    assert_eq!(
++        main.call(&JsValue::undefined(), &[], &mut context)
++            .unwrap()
++            .as_boolean(),
++        Some(true)
++    );
++}
++
++#[test]
++fn static_name_method() {
++    check(
++        r#"globalThis.nameReads = 0; globalThis.keyCalls = 0;
++export default (class { static name() { return "name method"; } });
++import C from "./case.mjs";
++export function main() { return C.name() === "name method"; }
++"#,
++    );
++}
++
++#[test]
++fn anonymous_class_default_name() {
++    check(
++        r#"globalThis.nameReads = 0; globalThis.keyCalls = 0;
++export default (class {});
++import C from "./case.mjs";
++export function main() { return C.name === "default"; }
++"#,
++    );
++}
++
++#[test]
++fn anonymous_function_default_name() {
++    check(
++        r#"globalThis.nameReads = 0; globalThis.keyCalls = 0;
++export default (function () {});
++import C from "./case.mjs";
++export function main() { return C.name === "default"; }
++"#,
++    );
++}
++
++#[test]
++fn static_name_getter() {
++    check(
++        r#"globalThis.nameReads = 0; globalThis.keyCalls = 0;
++export default (class { static get name() { globalThis.nameReads++; return "getter value"; } });
++import C from "./case.mjs";
++export function main() { return globalThis.nameReads === 0 && typeof Object.getOwnPropertyDescriptor(C, "name").get === "function" && C.name === "getter value" && globalThis.nameReads === 1; }
++"#,
++    );
++}
++
++#[test]
++fn static_name_string_field() {
++    check(
++        r#"globalThis.nameReads = 0; globalThis.keyCalls = 0;
++export default (class { static name = "field value"; });
++import C from "./case.mjs";
++export function main() { return C.name === "field value"; }
++"#,
++    );
++}
++
++#[test]
++fn computed_static_name_method() {
++    check(
++        r#"globalThis.nameReads = 0; globalThis.keyCalls = 0;
++export default (class { static [(globalThis.keyCalls++, "name")]() { return "computed method"; } });
++import C from "./case.mjs";
++export function main() { return globalThis.keyCalls === 1 && C.name() === "computed method"; }
++"#,
++    );
++}
++
++#[test]
++fn static_field_observes_default_name() {
++    check(
++        r#"globalThis.nameReads = 0; globalThis.keyCalls = 0;
++export default (class { static observed = this.name; });
++import C from "./case.mjs";
++export function main() { return C.observed === "default" && C.name === "default"; }
++"#,
++    );
++}
++
++#[test]
++fn static_block_deletes_name() {
++    check(
++        r#"globalThis.nameReads = 0; globalThis.keyCalls = 0;
++export default (class { static { delete this.name; } });
++import C from "./case.mjs";
++export function main() { return !Object.hasOwn(C, "name") && C.name === ""; }
++"#,
++    );
++}
++
++#[test]
++fn static_block_locks_name() {
++    check(
++        r#"globalThis.nameReads = 0; globalThis.keyCalls = 0;
++export default (class { static { Object.defineProperty(this, "name", {value: "locked", configurable: false}); } });
++import C from "./case.mjs";
++export function main() { return C.name === "locked" && Object.getOwnPropertyDescriptor(C, "name").configurable === false; }
++"#,
++    );
++}
++
++#[test]
++fn named_class_expression_control() {
++    check(
++        r#"globalThis.nameReads = 0; globalThis.keyCalls = 0;
++export default (class Original { static observed = this.name; });
++import C from "./case.mjs";
++export function main() { return C.name === "Original" && C.observed === "Original"; }
++"#,
++    );
++}
++
++#[test]
++fn default_class_declaration_control() {
++    check(
++        r#"globalThis.nameReads = 0; globalThis.keyCalls = 0;
++export default class { static name() { return "declaration method"; } };
++import C from "./case.mjs";
++export function main() { return C.name() === "declaration method"; }
++"#,
++    );
++}
+--- a/boa_engine-0.22.0/src/context/mod.rs
++++ b/boa_engine-0.22.0/src/context/mod.rs
+@@ -100,7 +100,7 @@
+     strict: bool,
+ 
+     /// Number of instructions remaining before a forced exit
+-    #[cfg(feature = "fuzz")]
++    #[cfg(any(feature = "fuzz", feature = "instruction-budget"))]
+     pub(crate) instructions_remaining: usize,
+ 
+     pub(crate) vm: Vm,
+@@ -117,6 +117,8 @@
+     intl_provider: icu::IntlProvider,
+ 
+     host_hooks: Rc<dyn HostHooks>,
++
++    retain_source_text: bool,
+ 
+     clock: Rc<dyn Clock>,
+ 
+@@ -182,6 +184,12 @@
+     #[must_use]
+     pub fn builder() -> ContextBuilder {
+         ContextBuilder::default()
++    }
++
++    /// Whether original JavaScript source is retained by this context.
++    #[must_use]
++    pub const fn retains_source_text(&self) -> bool {
++        self.retain_source_text
+     }
+ 
+     /// Evaluates the given source by compiling down to bytecode, then interpreting the
+@@ -449,7 +457,7 @@
+     }
+ 
+     /// Returns the amount of remaining instructions to be executed
+-    #[cfg(feature = "fuzz")]
++    #[cfg(any(feature = "fuzz", feature = "instruction-budget"))]
+     #[inline]
+     #[must_use]
+     pub fn instructions_remaining(&self) -> usize {
+@@ -1008,6 +1016,7 @@
+ pub struct ContextBuilder {
+     interner: Option<Interner>,
+     host_hooks: Option<Rc<dyn HostHooks>>,
++    retain_source_text: Option<bool>,
+     clock: Option<Rc<dyn Clock>>,
+     job_executor: Option<Rc<dyn JobExecutor>>,
+     module_loader: Option<Rc<dyn DynModuleLoader>>,
+@@ -1016,8 +1025,8 @@
+     icu: Option<icu::IntlProvider>,
+     #[cfg(feature = "temporal")]
+     timezone_provider: Option<Box<dyn TimeZoneProvider>>,
+-    #[cfg(feature = "fuzz")]
+-    instructions_remaining: usize,
++    #[cfg(any(feature = "fuzz", feature = "instruction-budget"))]
++    instructions_remaining: Option<usize>,
+ }
+ 
+ impl std::fmt::Debug for ContextBuilder {
+@@ -1055,7 +1064,7 @@
+             &self.timezone_provider.as_ref().map(|_| "TimeZoneProvider"),
+         );
+ 
+-        #[cfg(feature = "fuzz")]
++        #[cfg(any(feature = "fuzz", feature = "instruction-budget"))]
+         out.field("instructions_remaining", &self.instructions_remaining);
+ 
+         out.finish()
+@@ -1139,6 +1148,19 @@
+         self
+     }
+ 
++    /// Retains original JavaScript text for functions compiled in this context.
++    ///
++    /// Defaults to true. False preserves parser positions and runtime constants,
++    /// but omits original text from scripts, modules and dynamic-code parsers.
++    /// Function source reflection then uses the native-function form. JSON
++    /// reviver source data is independent and remains available.
++    /// This choice cannot be changed after building the context.
++    #[must_use]
++    pub fn retain_source_text(mut self, retain: bool) -> Self {
++        self.retain_source_text = Some(retain);
++        self
++    }
++
+     /// Initializes the [`Clock`] for the context.
+     #[must_use]
+     pub fn clock<C: Clock + 'static>(mut self, clock: Rc<C>) -> Self {
+@@ -1180,11 +1202,15 @@
+ 
+     /// Specifies the number of instructions remaining to the [`Context`].
+     ///
+-    /// This function is only available if the `fuzz` feature is enabled.
+-    #[cfg(feature = "fuzz")]
++    /// Available with `fuzz` or `instruction-budget`. The counter is shared by
++    /// every script, module, function and job executed in this context.
++    /// It is never automatically replenished. Explicit zero prevents dispatch.
++    /// The default is zero with `fuzz`, otherwise `usize::MAX`.
++    /// Hosts requiring a finite limit must set it explicitly.
++    #[cfg(any(feature = "fuzz", feature = "instruction-budget"))]
+     #[must_use]
+     pub const fn instructions_remaining(mut self, instructions_remaining: usize) -> Self {
+-        self.instructions_remaining = instructions_remaining;
++        self.instructions_remaining = Some(instructions_remaining);
+         self
+     }
+ 
+@@ -1249,10 +1275,17 @@
+                     }
+                 }
+             },
+-            #[cfg(feature = "fuzz")]
+-            instructions_remaining: self.instructions_remaining,
++            #[cfg(any(feature = "fuzz", feature = "instruction-budget"))]
++            instructions_remaining: self.instructions_remaining.unwrap_or(
++                if cfg!(feature = "fuzz") {
++                    0
++                } else {
++                    usize::MAX
++                },
++            ),
+             kept_alive: Vec::new(),
+             host_hooks,
++            retain_source_text: self.retain_source_text.unwrap_or(true),
+             clock,
+             job_executor,
+             module_loader,
+--- a/boa_engine-0.22.0/src/error/mod.rs
++++ b/boa_engine-0.22.0/src/error/mod.rs
+@@ -361,8 +361,8 @@
+ #[boa_gc(unsafe_no_drop)]
+ #[allow(variant_size_differences)]
+ pub enum EngineError {
+-    /// Error thrown when no instructions remain. Only used in a fuzzing context.
+-    #[cfg(feature = "fuzz")]
++    /// Error thrown when the context-lifetime instruction budget is exhausted.
++    #[cfg(any(feature = "fuzz", feature = "instruction-budget"))]
+     #[error("NoInstructionsRemainError: instruction budget was exhausted")]
+     NoInstructionsRemain,
+ 
+@@ -383,7 +383,7 @@
+     /// error reporting frameworks such as `anyhow`, `eyre` or `miette`.
+     fn into_erased(self, context: &mut Context) -> ErasedEngineError {
+         match self {
+-            #[cfg(feature = "fuzz")]
++            #[cfg(any(feature = "fuzz", feature = "instruction-budget"))]
+             EngineError::NoInstructionsRemain => ErasedEngineError::NoInstructionsRemain,
+             EngineError::RuntimeLimit(err) => ErasedEngineError::RuntimeLimit(err),
+             EngineError::Panic(err) => ErasedEngineError::Panic(ErasedPanicError {
+@@ -1578,8 +1578,8 @@
+ #[derive(Debug, Clone, Error, Eq, PartialEq, Trace, Finalize)]
+ #[allow(variant_size_differences)]
+ pub enum ErasedEngineError {
+-    /// Error thrown when no instructions remain. Only used in a fuzzing context.
+-    #[cfg(feature = "fuzz")]
++    /// Error thrown when the context-lifetime instruction budget is exhausted.
++    #[cfg(any(feature = "fuzz", feature = "instruction-budget"))]
+     #[error("NoInstructionsRemainError: instruction budget was exhausted")]
+     NoInstructionsRemain,
+ 
+--- /dev/null
++++ b/boa_engine-0.22.0/src/instruction_budget_tests.rs
+@@ -0,0 +1,213 @@
++//! Dedicated fuel regression tests. This feature does not enable fuzzing.
++use crate::builtins::promise::PromiseState;
++use crate::context::time::FixedClock;
++use crate::error::EngineError;
++use crate::module::IdleModuleLoader;
++use crate::{Context, JsError, JsResult, JsValue, Module, Script, Source, js_string};
++use std::rc::Rc;
++
++fn context(fuel: usize) -> Context {
++    Context::builder()
++        .retain_source_text(false)
++        .instructions_remaining(fuel)
++        .clock(Rc::new(FixedClock::default()))
++        .module_loader(Rc::new(IdleModuleLoader))
++        .build()
++        .unwrap()
++}
++
++fn exhausted(error: JsError) {
++    assert!(matches!(
++        error.as_engine(),
++        Some(EngineError::NoInstructionsRemain)
++    ));
++    assert!(!error.is_catchable());
++}
++
++fn global_number(context: &mut Context, name: &str) -> Option<f64> {
++    let global = context.global_object();
++    global
++        .get(crate::JsString::from(name), context)
++        .unwrap()
++        .as_number()
++}
++
++fn linked(source: &str, context: &mut Context) -> Module {
++    let before = context.instructions_remaining();
++    let module = Module::parse(Source::from_bytes(source), None, context).unwrap();
++    let loaded = module.load(context);
++    context.run_jobs().unwrap();
++    assert!(matches!(loaded.state(), PromiseState::Fulfilled(_)));
++    module.link(context).unwrap();
++    assert_eq!(context.instructions_remaining(), before);
++    module
++}
++
++fn evaluate(module: &Module, context: &mut Context) -> JsResult<()> {
++    let promise = module.evaluate(context)?;
++    context.run_jobs()?;
++    match promise.state() {
++        PromiseState::Fulfilled(_) => Ok(()),
++        PromiseState::Rejected(error) => Err(JsError::from_opaque(error)),
++        PromiseState::Pending => panic!("fixture must settle"),
++    }
++}
++
++#[test]
++#[cfg(not(feature = "fuzz"))]
++fn default_remains_compatible_and_explicit_zero_is_zero() {
++    let mut default = Context::default();
++    assert_eq!(default.instructions_remaining(), usize::MAX);
++    assert_eq!(
++        default.eval(Source::from_bytes("42")).unwrap().as_number(),
++        Some(42.0)
++    );
++    let mut zero = context(0);
++    let script = Script::parse(
++        Source::from_bytes("globalThis.mustNotRun = 1"),
++        None,
++        &mut zero,
++    )
++    .unwrap();
++    script.codeblock(&mut zero).unwrap();
++    assert_eq!(zero.instructions_remaining(), 0);
++    exhausted(script.evaluate(&mut zero).unwrap_err());
++    assert_eq!(global_number(&mut zero, "mustNotRun"), None);
++}
++
++#[test]
++fn parse_compile_load_link_do_not_spend_guest_fuel() {
++    let mut zero = context(0);
++    let script = Script::parse(
++        Source::from_bytes("function f() { return () => 42; }"),
++        None,
++        &mut zero,
++    )
++    .unwrap();
++    script.codeblock(&mut zero).unwrap();
++    let _module = linked("export function main() { return 42; }", &mut zero);
++    assert_eq!(zero.instructions_remaining(), 0);
++}
++
++#[test]
++fn nested_catch_finally_cannot_escape_exhaustion() {
++    let mut ctx = context(300);
++    let before_frames = ctx.vm.frames.len();
++    let error = ctx
++        .eval(Source::from_bytes(
++            r#"
++        globalThis.started = 1;
++        function inner() {
++            while (true) {
++                try { while (true) {} }
++                catch (_) { globalThis.caught = 1; }
++                finally { globalThis.finalized = 1; }
++            }
++        }
++        function outer() { inner(); globalThis.returned = 1; }
++        outer();
++        globalThis.after = 1;
++    "#,
++        ))
++        .unwrap_err();
++    exhausted(error);
++    assert_eq!(ctx.instructions_remaining(), 0);
++    assert_eq!(ctx.vm.frames.len(), before_frames);
++    assert_eq!(global_number(&mut ctx, "started"), Some(1.0));
++    for name in ["caught", "finalized", "returned", "after"] {
++        assert_eq!(global_number(&mut ctx, name), None);
++    }
++    exhausted(
++        ctx.eval(Source::from_bytes("globalThis.after = 2"))
++            .unwrap_err(),
++    );
++    assert_eq!(global_number(&mut ctx, "after"), None);
++}
++
++#[test]
++fn ample_budget_returns_expected_value_and_decreases() {
++    let mut ctx = context(200_000);
++    let result = ctx
++        .eval(Source::from_bytes(
++            "let s = 0; for (let i = 0; i < 100; i++) s += i; s",
++        ))
++        .unwrap();
++    assert_eq!(result.as_number(), Some(4950.0));
++    assert!(ctx.instructions_remaining() < 200_000);
++    assert!(ctx.instructions_remaining() > 0);
++}
++
++#[test]
++fn module_initialization_and_export_call_share_budget() {
++    let mut ctx = context(600);
++    let module = linked(
++        r#"
++        globalThis.initialized = 1;
++        export function main() { while (true) {} }
++    "#,
++        &mut ctx,
++    );
++    evaluate(&module, &mut ctx).unwrap();
++    let after_init = ctx.instructions_remaining();
++    assert!(after_init > 0 && after_init < 600);
++    let main = module
++        .get_value(js_string!("main"), &mut ctx)
++        .unwrap()
++        .as_callable()
++        .unwrap();
++    exhausted(main.call(&JsValue::undefined(), &[], &mut ctx).unwrap_err());
++    assert_eq!(ctx.instructions_remaining(), 0);
++    assert_eq!(global_number(&mut ctx, "initialized"), Some(1.0));
++}
++
++#[test]
++fn module_call_and_promise_jobs_share_budget() {
++    let mut ctx = context(600);
++    let module = linked(
++        r#"
++        globalThis.initialized = 1;
++        export function main() {
++            globalThis.called = 1;
++            Promise.resolve().then(() => {
++                globalThis.jobStarted = 1;
++                try { while (true) {} }
++                catch (_) { globalThis.jobCaught = 1; }
++                globalThis.jobAfter = 1;
++            });
++            return 42;
++        }
++    "#,
++        &mut ctx,
++    );
++    evaluate(&module, &mut ctx).unwrap();
++    let after_init = ctx.instructions_remaining();
++    let main = module
++        .get_value(js_string!("main"), &mut ctx)
++        .unwrap()
++        .as_callable()
++        .unwrap();
++    assert_eq!(
++        main.call(&JsValue::undefined(), &[], &mut ctx)
++            .unwrap()
++            .as_number(),
++        Some(42.0)
++    );
++    assert!(ctx.instructions_remaining() < after_init);
++    assert!(ctx.instructions_remaining() > 0);
++    exhausted(ctx.run_jobs().unwrap_err());
++    assert_eq!(ctx.instructions_remaining(), 0);
++    assert_eq!(global_number(&mut ctx, "called"), Some(1.0));
++    assert_eq!(global_number(&mut ctx, "jobStarted"), Some(1.0));
++    assert_eq!(global_number(&mut ctx, "jobCaught"), None);
++    assert_eq!(global_number(&mut ctx, "jobAfter"), None);
++}
++
++#[test]
++fn async_script_dispatch_uses_same_lifetime_counter() {
++    let mut ctx = context(150);
++    let script = Script::parse(Source::from_bytes("while (true) {}"), None, &mut ctx).unwrap();
++    let error =
++        futures_lite::future::block_on(script.evaluate_async_with_budget(&mut ctx, 7)).unwrap_err();
++    exhausted(error);
++    assert_eq!(ctx.instructions_remaining(), 0);
++}
+--- a/boa_engine-0.22.0/src/lib.rs
++++ b/boa_engine-0.22.0/src/lib.rs
+@@ -530,3 +530,12 @@
+         }
+     }
+ }
++
++#[cfg(test)]
++mod source_removal_tests;
++
++#[cfg(all(test, feature = "instruction-budget"))]
++mod instruction_budget_tests;
++
++#[cfg(test)]
++mod class_name_tests;
+--- a/boa_engine-0.22.0/src/module/mod.rs
++++ b/boa_engine-0.22.0/src/module/mod.rs
+@@ -278,11 +278,17 @@
+         let realm = realm.unwrap_or_else(|| context.realm().clone());
+ 
+         let mut parser = Parser::new(src);
++        parser.set_source_text_retention(context.retains_source_text());
+         parser.set_identifier(context.next_parser_identifier());
+         let (module, source) =
+             parser.parse_module_with_source(realm.scope(), context.interner_mut())?;
+ 
+-        let source_text = SourceText::new(source);
++        let source_text = if context.retains_source_text() {
++            SourceText::new(source)
++        } else {
++            // None is required: Some(empty) cannot be sliced using real spans.
++            SourceText::default()
++        };
+         let src = SourceTextModule::new(module, context.interner(), source_text, path.clone());
+ 
+         Ok(Self {
+--- a/boa_engine-0.22.0/src/script.rs
++++ b/boa_engine-0.22.0/src/script.rs
+@@ -91,6 +91,7 @@
+     ) -> JsResult<Self> {
+         let path = src.path().map(Path::to_path_buf);
+         let mut parser = Parser::new(src);
++        parser.set_source_text_retention(context.retains_source_text());
+         parser.set_identifier(context.next_parser_identifier());
+         if context.is_strict() {
+             parser.set_strict();
+@@ -101,7 +102,12 @@
+             context.optimize_statement_list(code.statements_mut());
+         }
+ 
+-        let source_text = SourceText::new(source);
++        let source_text = if context.retains_source_text() {
++            SourceText::new(source)
++        } else {
++            // None is required: Some(empty) cannot be sliced using real spans.
++            SourceText::default()
++        };
+ 
+         Ok(Self {
+             inner: Gc::new(Inner {
+--- /dev/null
++++ b/boa_engine-0.22.0/src/source_removal_tests.rs
+@@ -0,0 +1,117 @@
++//! Private source-retention regression tests; default behavior remains upstream.
++use crate::{Context, Module, Script, Source};
++
++fn number(source: &str, retain: bool) -> f64 {
++    let mut context = Context::builder()
++        .retain_source_text(retain)
++        .build()
++        .unwrap();
++    context
++        .eval(Source::from_bytes(source))
++        .unwrap()
++        .as_number()
++        .unwrap()
++}
++
++#[test]
++fn nested_class_closure_and_source_fallback() {
++    let source = r#"
++        /* SOURCE_COMMENT_ONLY_STATIC */
++        function outer(n) {
++            class Counter { #n = n; value() { return () => this.#n; } }
++            return new Counter().value();
++        }
++        const f = outer(42);
++        f() + (outer.toString().includes('[native code]') ? 1 : 0)
++    "#;
++    assert_eq!(number(source, true), 42.0);
++    assert_eq!(number(source, false), 43.0);
++}
++
++#[test]
++fn absent_source_is_preserved_in_script_and_nested_code() {
++    let mut context = Context::builder()
++        .retain_source_text(false)
++        .build()
++        .unwrap();
++    let script = Script::parse(
++        Source::from_bytes("function f() { return () => 42; } f()();"),
++        None,
++        &mut context,
++    )
++    .unwrap();
++    let code = script.codeblock(&mut context).unwrap();
++    assert!(code.source_info().text_spanned().to_code_points().is_none());
++    assert_eq!(
++        script.evaluate(&mut context).unwrap().as_number(),
++        Some(42.0)
++    );
++}
++
++#[test]
++fn module_link_and_evaluate_remain_separate() {
++    let mut context = Context::builder()
++        .retain_source_text(false)
++        .build()
++        .unwrap();
++    let module = Module::parse(
++        Source::from_bytes("export function main() { return 42; }"),
++        None,
++        &mut context,
++    )
++    .unwrap();
++    let loaded = module.load(&mut context);
++    context.run_jobs().unwrap();
++    assert!(matches!(
++        loaded.state(),
++        crate::builtins::promise::PromiseState::Fulfilled(_)
++    ));
++    module.link(&mut context).unwrap();
++    let evaluated = module.evaluate(&mut context).unwrap();
++    context.run_jobs().unwrap();
++    assert!(matches!(
++        evaluated.state(),
++        crate::builtins::promise::PromiseState::Fulfilled(_)
++    ));
++}
++
++#[test]
++fn json_reviver_source_is_data_and_must_survive() {
++    assert_eq!(
++        number(
++            r#"JSON.parse('123', (k, v, c) => k === '' ? Number(c.source) : v)"#,
++            false
++        ),
++        123.0
++    );
++}
++
++#[test]
++fn dynamic_compilation_semantics_survive_discard() {
++    assert_eq!(number("eval('let x = 40; x + 2')", false), 42.0);
++    assert_eq!(number("Function('n', 'return n + 2')(40)", false), 42.0);
++}
++
++#[test]
++fn source_visibility_hook_is_respected_when_retained() {
++    struct Hidden;
++    impl crate::context::HostHooks for Hidden {
++        fn has_source_text_available(
++            &self,
++            _function: &crate::object::JsFunction,
++            _context: &mut Context,
++        ) -> bool {
++            false
++        }
++    }
++    let mut context = Context::builder()
++        .host_hooks(std::rc::Rc::new(Hidden))
++        .build()
++        .unwrap();
++    let result = context
++        .eval(Source::from_bytes(
++            "function f() { return 42; } f.toString().includes('[native code]')",
++        ))
++        .unwrap();
++    assert_eq!(result.as_boolean(), Some(true));
++}
+--- a/boa_engine-0.22.0/src/vm/mod.rs
++++ b/boa_engine-0.22.0/src/vm/mod.rs
+@@ -778,13 +778,12 @@
+     where
+         F: FnOnce(&mut Context, Opcode) -> ControlFlow<CompletionRecord>,
+     {
+-        #[cfg(feature = "fuzz")]
++        #[cfg(any(feature = "fuzz", feature = "instruction-budget"))]
+         {
+             use crate::error::EngineError;
+             if self.instructions_remaining == 0 {
+-                return ControlFlow::Break(CompletionRecord::Throw(
+-                    EngineError::NoInstructionsRemain.into(),
+-                ));
++                // Unwind nested frames through the existing uncatchable-error path.
++                return self.handle_error(EngineError::NoInstructionsRemain.into());
+             }
+             self.instructions_remaining -= 1;
+         }

@@ -1,0 +1,188 @@
+--- a/boa_parser-0.22.0/src/lexer/cursor.rs
++++ b/boa_parser-0.22.0/src/lexer/cursor.rs
+@@ -12,7 +12,8 @@
+     module: bool,
+     strict: bool,
+     peeked: [Option<u32>; 4],
+-    source_collector: SourceText,
++    source_collector: Option<SourceText>,
++    linear_offset: usize,
+ }
+ 
+ impl<R> Cursor<R> {
+@@ -31,12 +32,31 @@
+     /// Gets the current linear position of the cursor in the source code.
+     #[inline]
+     pub(super) fn linear_pos(&self) -> LinearPosition {
+-        self.source_collector.cur_linear_position()
++        LinearPosition::new(self.linear_offset)
+     }
+ 
+     pub(super) fn take_source(&mut self) -> SourceText {
+-        let replace_with = SourceText::with_capacity(0);
+-        std::mem::replace(&mut self.source_collector, replace_with)
++        self.linear_offset = 0;
++        match &mut self.source_collector {
++            Some(source) => std::mem::replace(source, SourceText::with_capacity(0)),
++            None => SourceText::with_capacity(0),
++        }
++    }
++
++    pub(super) fn set_source_text_retention(&mut self, retain: bool) {
++        assert_eq!(
++            self.linear_offset, 0,
++            "source retention must precede lexing"
++        );
++        self.source_collector = retain.then(SourceText::default);
++    }
++
++    fn record_code_point(&mut self, cp: u32) {
++        // Positions count UTF-16 code units independently of source storage.
++        self.linear_offset += if cp <= 0xFFFF { 1 } else { 2 };
++        if let Some(source) = &mut self.source_collector {
++            source.collect_code_point(cp);
++        }
+     }
+ 
+     /// Advances the position to the next column.
+@@ -83,7 +103,8 @@
+             strict: false,
+             module: false,
+             peeked: [None; 4],
+-            source_collector: SourceText::default(),
++            source_collector: Some(SourceText::default()),
++            linear_offset: 0,
+         }
+     }
+ 
+@@ -193,7 +214,7 @@
+         };
+ 
+         if let Some(ch) = ch {
+-            self.source_collector.collect_code_point(ch);
++            self.record_code_point(ch);
+         }
+ 
+         match ch {
+@@ -203,7 +224,7 @@
+                 if self.peek_char()? == Some(0xA) {
+                     self.peeked[0] = None;
+                     self.peeked.rotate_left(1);
+-                    self.source_collector.collect_code_point(0xA);
++                    self.record_code_point(0xA);
+                 }
+                 self.next_line();
+             }
+@@ -222,3 +243,49 @@
+         Self::new(UTF8Input::new(input))
+     }
+ }
++
++#[cfg(test)]
++mod source_retention_tests {
++    use super::Cursor;
++
++    #[test]
++    fn discard_preserves_utf16_positions_and_crlf() {
++        for input in [
++            "abc",
++            "aé😀z",
++            "a\r\nb\rc\nd\u{2028}e\u{2029}",
++            "/* 😀 */\r\nx",
++        ] {
++            let mut retained = Cursor::from(input.as_bytes());
++            let mut discarded = Cursor::from(input.as_bytes());
++            discarded.set_source_text_retention(false);
++            loop {
++                let a = retained.next_char().unwrap();
++                let b = discarded.next_char().unwrap();
++                assert_eq!(a, b);
++                assert_eq!(retained.pos_group(), discarded.pos_group());
++                if a.is_none() {
++                    break;
++                }
++            }
++            assert_eq!(discarded.linear_pos().pos(), input.encode_utf16().count());
++            assert!(discarded.source_collector.is_none());
++            assert_eq!(discarded.take_source().cur_linear_position().pos(), 0);
++            assert_eq!(
++                retained.take_source().cur_linear_position().pos(),
++                input.encode_utf16().count()
++            );
++        }
++    }
++
++    #[test]
++    fn discard_counts_lone_utf16_surrogate() {
++        let input = [0xD800_u16, 0x61, 0xD83D, 0xDE00, 0xDC00];
++        let source = crate::Source::from_utf16(&input);
++        let mut cursor = Cursor::new(source.reader);
++        cursor.set_source_text_retention(false);
++        while cursor.next_char().unwrap().is_some() {}
++        assert_eq!(cursor.linear_pos().pos(), input.len());
++        assert!(cursor.source_collector.is_none());
++    }
++}
+--- a/boa_parser-0.22.0/src/lexer/mod.rs
++++ b/boa_parser-0.22.0/src/lexer/mod.rs
+@@ -88,6 +88,10 @@
+     /// Sets the current strict mode.
+     pub(super) fn set_strict(&mut self, strict: bool) {
+         self.cursor.set_strict(strict);
++    }
++
++    pub(super) fn set_source_text_retention(&mut self, retain: bool) {
++        self.cursor.set_source_text_retention(retain);
+     }
+ 
+     /// Returns if module mode is currently active.
+--- a/boa_parser-0.22.0/src/parser/cursor/buffered_lexer/mod.rs
++++ b/boa_parser-0.22.0/src/parser/cursor/buffered_lexer/mod.rs
+@@ -113,6 +113,10 @@
+ 
+     pub(super) fn set_strict(&mut self, strict: bool) {
+         self.lexer.set_strict(strict);
++    }
++
++    pub(super) fn set_source_text_retention(&mut self, retain: bool) {
++        self.lexer.set_source_text_retention(retain);
+     }
+ 
+     pub(super) const fn module(&self) -> bool {
+--- a/boa_parser-0.22.0/src/parser/cursor/mod.rs
++++ b/boa_parser-0.22.0/src/parser/cursor/mod.rs
+@@ -135,6 +135,10 @@
+     /// Sets the strict mode to strict or non-strict.
+     pub(super) fn set_strict(&mut self, strict: bool) {
+         self.buffered_lexer.set_strict(strict);
++    }
++
++    pub(super) fn set_source_text_retention(&mut self, retain: bool) {
++        self.buffered_lexer.set_source_text_retention(retain);
+     }
+ 
+     /// Returns if the cursor is currently in an arrow function declaration.
+--- a/boa_parser-0.22.0/src/parser/mod.rs
++++ b/boa_parser-0.22.0/src/parser/mod.rs
+@@ -268,6 +268,21 @@
+ }
+ 
+ impl<R> Parser<'_, R> {
++    /// Chooses whether to collect original source text. Defaults to true.
++    ///
++    /// Numeric spans are preserved when recording is disabled. This does not
++    /// remove literal values or other data required by JavaScript semantics.
++    ///
++    /// # Panics
++    ///
++    /// Panics if any input character has already been consumed.
++    pub fn set_source_text_retention(&mut self, retain: bool)
++    where
++        R: ReadChar,
++    {
++        self.cursor.set_source_text_retention(retain);
++    }
++
+     /// Set the parser strict mode to true.
+     pub fn set_strict(&mut self)
+     where

@@ -1,0 +1,51 @@
+{
+  "profile": "es2025-module-positive-sync-candidates-117-v1",
+  "pin": "d53ebc8b1931d9f1541e43d59650776e4b766248",
+  "discovered": 53616,
+  "selected": 117,
+  "eligibleNotSelected": 0,
+  "excludedFromInitialSlice": 53499,
+  "primaryReasons": {
+    "SCRIPT_SOURCE_GOAL_OUTSIDE_SLICE": 52773,
+    "SOURCE_PATH_OUTSIDE_REVIEWED_SLICE": 26,
+    "ASYNC_OUTSIDE_SLICE": 308,
+    "NEGATIVE_PARSE_OUTSIDE_SLICE": 205,
+    "ADDITIONAL_HARNESS_OUTSIDE_SLICE": 34,
+    "NEGATIVE_RESOLUTION_OUTSIDE_SLICE": 34,
+    "FEATURE_NOT_REVIEWED_FOR_ES2025_SLICE": 20,
+    "PROPOSED_FEATURE_UNREVIEWED": 86,
+    "SELECTED_NOT_RUN": 117,
+    "NEGATIVE_RUNTIME_OUTSIDE_SLICE": 8,
+    "STAGING_SCOPE_UNREVIEWED": 5
+  },
+  "allReasons": {
+    "SCRIPT_SOURCE_GOAL_OUTSIDE_SLICE": 52773,
+    "ANNEX_B_OUTSIDE_SLICE": 1086,
+    "SOURCE_PATH_OUTSIDE_REVIEWED_SLICE": 52885,
+    "HOST_FEATURE_UNSUPPORTED": 57,
+    "FEATURE_NOT_REVIEWED_FOR_ES2025_SLICE": 31231,
+    "ADDITIONAL_HARNESS_OUTSIDE_SLICE": 13638,
+    "PROPOSED_FEATURE_UNREVIEWED": 2581,
+    "NEGATIVE_RUNTIME_OUTSIDE_SLICE": 40,
+    "RAW_OUTSIDE_SLICE": 32,
+    "NEGATIVE_PARSE_OUTSIDE_SLICE": 4660,
+    "ASYNC_OUTSIDE_SLICE": 7729,
+    "HOST_PROFILE_UNSUPPORTED": 9,
+    "HARNESS_SELFTEST_OUTSIDE_SLICE": 116,
+    "ECMA402_OUTSIDE_PROFILE": 3382,
+    "NEGATIVE_RESOLUTION_OUTSIDE_SLICE": 34,
+    "STAGING_SCOPE_UNREVIEWED": 1483
+  },
+  "featuresFile": "features.txt",
+  "featuresSha256": "2f8dfa3d3ba98ae4618692c30f7c365069fb55d5899add707f50749f648ba039",
+  "featureTagsAtPin": 199,
+  "metadataParser": "official pinned tools/packaging/monkeyYaml.py fallback; not a general YAML parser",
+  "metadataErrors": 0,
+  "execution": {
+    "PASS": 0,
+    "FAIL": 0,
+    "UNSUPPORTED": 0,
+    "NOT_RUN": 53616
+  },
+  "note": "Classification is an initial runner profile, not an ECMAScript2025 coverage rate. Every test is retained; exclusions do not imply absence from the edition."
+}

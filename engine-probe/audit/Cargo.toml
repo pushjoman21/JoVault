@@ -1,0 +1,12 @@
+[package]
+name = "jovault-wasm-checkpoint-audit"
+version = "0.0.0"
+edition = "2024"
+publish = false
+license = "MIT"
+
+[workspace]
+
+[dependencies]
+wasmparser = "=0.240.0"
+serde_json = "=1.0.154"

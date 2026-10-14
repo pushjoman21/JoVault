@@ -1,0 +1,124 @@
+{
+  "schema": "jovault-boa-default-class-name-experiment-v1",
+  "upstream": "337a3668a0dc86dd401ea20906e782249a64a228",
+  "parentManifestSha256": "846563db67120a7faf5d46ff4cb0ecea05fc4dfeb882d97f5ae160383ae1223a",
+  "feature": "instruction-budget",
+  "fix": "Default anonymous class expression NamedEvaluation before static elements",
+  "format": "rustfmt 1.98.1; edition 2024; skip_children=true; owned Rust changes only",
+  "crates": [
+    {
+      "name": "boa_engine-0.22.0",
+      "archiveSha256": "5d6aaf7fdc4299df68adb67e1a5440a51d34630a1f5271b9698fd74bc97b60d9",
+      "patchSha256": "bf28f820d86569a048146492eb7410e8a69a1bdd10adb8cd17e38d460892c224",
+      "changedFiles": [
+        {
+          "path": "Cargo.toml",
+          "beforeSha256": "cdeb5b6d30a1f333ff221c5ade9869f894641c705b562dab809da7445786d8d8",
+          "afterSha256": "8d1c56bdbbb74234c0da42142810db8bb31a51c26c18ce612ebd60cd3d48ba23"
+        },
+        {
+          "path": "Cargo.toml.orig",
+          "beforeSha256": "6895668e406197f8e1848163f2ea1d371d2086b55f50dbe85c6ff9a5ae4b3cb1",
+          "afterSha256": "d0d4908304a5973ffb556929731879e0d8cab4f1e3ec41b6dcf70dc75e5f0f2e"
+        },
+        {
+          "path": "src/builtins/eval/mod.rs",
+          "beforeSha256": "58619a53eb47d744c4038fa93b3d81fcc63a7b1a16c65820fe3a4de361c1e1b7",
+          "afterSha256": "e9dc005f5eab3eaa34c3c0c14cda59a2db36f577119eaa41504bcd9c553a6331"
+        },
+        {
+          "path": "src/builtins/function/mod.rs",
+          "beforeSha256": "549ab459987bee4980a92068e64c7603006e8fb350695d4c166eba0694cf2819",
+          "afterSha256": "34168d4c54b5fa5325d895e4923e8cda308d9a57a2d1726b1a2a2b5b76696996"
+        },
+        {
+          "path": "src/bytecompiler/class.rs",
+          "beforeSha256": "8e7a7b512857050e1a264b42f4cf3011e3ddb3994c36c9f37c3b29a56e6fbdae",
+          "afterSha256": "95bfd9c96e97460d2a5551195faa405fa2bb2767698851e069fdb651441c1508"
+        },
+        {
+          "path": "src/bytecompiler/module.rs",
+          "beforeSha256": "fb5107b17712bfb29b50a8ee815b71f75f1ecefe40764d33cfcbb5156912ae51",
+          "afterSha256": "f92e0728a66c6b533a22eb17ebfa8243da6fabeee13e1e7e95bed4b61773704a"
+        },
+        {
+          "path": "src/class_name_tests.rs",
+          "beforeSha256": null,
+          "afterSha256": "bc102c647ec3b2cf8137b0461b07759e514093ad330affb13b85f21b9951d0e9"
+        },
+        {
+          "path": "src/context/mod.rs",
+          "beforeSha256": "1c58395d0e9b86d314a21b68b96f0ff5076b9599f77965c7c2cf18ee3fc1d416",
+          "afterSha256": "177dc0bd4d1c899523b6352a39f7d51a31110ea88fddf616764d61e7f60e8ab9"
+        },
+        {
+          "path": "src/error/mod.rs",
+          "beforeSha256": "a8018e89619148d9382002e521596a2267f79329f161b1280db640afb7c179e9",
+          "afterSha256": "6632bbd981814b50c0b17f9353770281c8c5039d8a216fda6adb9063c6a429ff"
+        },
+        {
+          "path": "src/instruction_budget_tests.rs",
+          "beforeSha256": null,
+          "afterSha256": "a5caf9dc97873ceafd579c85506a20bb1ddecb7c15b3615b95cf1045804e4cee"
+        },
+        {
+          "path": "src/lib.rs",
+          "beforeSha256": "469b075c5dfe4e0311158b39385ac115c2989e80522b4db5d3a7ec5342f474a7",
+          "afterSha256": "155bcd11d3392c8fa7d2ba95d4397c80a62c1251e6a3a7212162144cce23241e"
+        },
+        {
+          "path": "src/module/mod.rs",
+          "beforeSha256": "44e77cd639d386c5ad2175307e07ad0bd74ecaf6d2aed26cb997bfd32a09025e",
+          "afterSha256": "0ab8d2e9f1b893c451d48570433fdcfba03a529d8c5c348eee150ca917033f09"
+        },
+        {
+          "path": "src/script.rs",
+          "beforeSha256": "e6de03bb4b39654875636846adec5acb4b1e9ba12842359d11f41d98beed6f21",
+          "afterSha256": "8a9d5e5709faa43c0862ac612f1c50314ca67ad60c50099e3e4cf2bae46c7674"
+        },
+        {
+          "path": "src/source_removal_tests.rs",
+          "beforeSha256": null,
+          "afterSha256": "4d3e44f51090378980e14e4792c883abf3cd3a7e9391cc0205764eb07ee08fd5"
+        },
+        {
+          "path": "src/vm/mod.rs",
+          "beforeSha256": "b0b8b6f439e53fad0b7d10510b31f54389f9d2c1f2a271f7ae927d0fda0fa3be",
+          "afterSha256": "2cbecd1cc86143ed2f0e4b17a1bc026f0f8b124d94b36e04258e702c13075d95"
+        }
+      ]
+    },
+    {
+      "name": "boa_parser-0.22.0",
+      "archiveSha256": "641e81b3c8cbb7a2140547fb3ea534e9edf210b4e8c920b5fa864a919e11fbcf",
+      "patchSha256": "605720d84551e233746ad11c117760f715db24b0de833ab02ee9111d52b0d2ff",
+      "changedFiles": [
+        {
+          "path": "src/lexer/cursor.rs",
+          "beforeSha256": "18209f47855caae8e42f4ec325cba046ab89ca305d6bf360a0dc311bc636522c",
+          "afterSha256": "4ae51812b426cd0c7417a52e2b62a7f000a92d2d7302290c28d0267322278f8b"
+        },
+        {
+          "path": "src/lexer/mod.rs",
+          "beforeSha256": "17020a6475c6d5820b6424e95d6eace8f6899a4fb509ee9450449629898fbab2",
+          "afterSha256": "9d0047b414ebb9991097c3e78d2f496c2e7972baf383e6cefa3d17a9d36a8cde"
+        },
+        {
+          "path": "src/parser/cursor/buffered_lexer/mod.rs",
+          "beforeSha256": "ebeb33c7bbb5a8c7fa19729c6dc6d475a1d7647e99083d28390016d0b8ee4ef6",
+          "afterSha256": "6fa5366238e54813d5050ff5b35c5ebd75e34d971321fa57d2895ae3070c4322"
+        },
+        {
+          "path": "src/parser/cursor/mod.rs",
+          "beforeSha256": "1e971c3c4806f916ce0bdf241c3c9197865ae7d72e4842ed31a4b0a1ee3ce7de",
+          "afterSha256": "a9dd786a01aad1be860ab40bb4b8780b3d3272b8c635b431c7849689f80c002e"
+        },
+        {
+          "path": "src/parser/mod.rs",
+          "beforeSha256": "d339fa96a366a6bd3ee9dcc2b2bf20874edcdf19347a00ce1b40f6d1ed83e2a2",
+          "afterSha256": "ed77a601ab9ab8a0c449312da79938cdf20b14de782944c528df5e8c2c7f9ebf"
+        }
+      ]
+    }
+  ]
+}

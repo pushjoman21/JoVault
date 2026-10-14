@@ -1,0 +1,29 @@
+[package]
+name = "jovault-boa-snapshot-probe"
+version = "0.0.0"
+edition = "2024"
+publish = false
+license = "MIT"
+
+[lib]
+crate-type = ["cdylib"]
+
+[features]
+source-removal = []
+instruction-budget = ["boa_engine/instruction-budget"]
+
+[dependencies]
+boa_engine = { version = "=0.22.0", default-features = false }
+getrandom = "=0.4.3"
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = { version = "=1.0.154", features = ["raw_value"] }
+
+[patch.crates-io]
+boa_engine = { path = "patches/vendor-budget/boa_engine-0.22.0" }
+boa_parser = { path = "patches/vendor-budget/boa_parser-0.22.0" }
+
+[profile.release]
+panic = "abort"
+opt-level = "s"
+codegen-units = 1
+lto = "thin"
