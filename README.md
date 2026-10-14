@@ -10,7 +10,7 @@ inspect its instructions, and compare native execution with the matching VM.
 
 [Research](https://jomanvm.vercel.app/posts/2026-10-14-jovault-register-vm.html) · [Guide](docs/USAGE.md) · [Compatibility](docs/COMPATIBILITY.md) · [Validation](docs/VALIDATION.md)
 
-Experimental, private preview. Full JavaScript support and resistance to reverse
+Experimental [research preview](https://github.com/pushjoman21/JoVault/releases/tag/research-preview-2026-10-14). Full JavaScript support and resistance to reverse
 engineering remain unproven. Code delivered to a browser remains inspectable.
 
 ## Try it

@@ -1,8 +1,8 @@
 {
   "schema": "jovault-standalone-origin-v1",
-  "status": "private-working-tree-snapshot",
+  "status": "reviewed-source-snapshot",
   "sourceRepository": "https://github.com/pushjoman21/JoVM",
-  "sourceBaseCommit": "45b41ade5ae93be32c266e8d56dac19e633025ac",
+  "sourceBaseCommit": "430aa6a0f7eaf3fab58fd1dcea572a0e62fdae8d",
   "sourceState": "working-tree snapshot after the base commit; current files are identified by SHA-256, not claimed to exist at that commit",
   "sourceInputs": [
     {
@@ -26,8 +26,8 @@
     {
       "source": "side_pr/JoVault/README.md",
       "destination": "README.md",
-      "sourceSha256": "fe0d5cc815f6a87fc923e45be434266414e9dc8b49277b45c6ad166d159f63b7",
-      "destinationSha256": "c164dba330ada81776a6e58fe0bec2e185b2ce7b218b6df59478033fd1c82822",
+      "sourceSha256": "c509b44ba7f2fc0be5ff8cf132a271f6ac1f6d1a8ed4d43e86642e068d251db2",
+      "destinationSha256": "c98d4ab3e0a98f940677dbea8394a7a2436c923dd1ae25a7a319c1bc4f9f2c2f",
       "reason": "Lift the owned JoVault source tree without an alternate implementation.",
       "transforms": [
         {
@@ -157,8 +157,8 @@
     {
       "source": "side_pr/JoVault/docs/VALIDATION.md",
       "destination": "docs/VALIDATION.md",
-      "sourceSha256": "2a73ee4d59a6f030dd412c77348cc4b4586108866fa0172482e03e53ab1feb74",
-      "destinationSha256": "0293909b0d71fe4a57cf9081a186d9e6ada2ca9fdd7bb6659bb7ecc3bf3dd976",
+      "sourceSha256": "3f480519dbd4b98ebe35dcd294a213c86331164acc06c0b0addc02d942c0f971",
+      "destinationSha256": "5d81d272a5a5b79d403b2c8a56d99b2ee11ca54b784cfd1b89b9a56a505ffe9d",
       "reason": "Lift the owned JoVault source tree without an alternate implementation.",
       "transforms": [
         {
@@ -940,7 +940,7 @@
     },
     {
       "destination": "CHANGELOG.md",
-      "destinationSha256": "ff0b53d6b2cc92680d65878790a858d408eea65bd68087fd94b08e8758b26d22"
+      "destinationSha256": "11fef86cc763b053c8501546367bf293e5c50254ad154bea84ef960a3a5cbded"
     },
     {
       "destination": ".gitignore",

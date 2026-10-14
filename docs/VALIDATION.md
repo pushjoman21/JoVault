@@ -221,10 +221,12 @@ had no passing result. This is a language failure,
 distinct from the earlier runner display-control failure. Its original report is
 preserved alongside the later result below.
 
-### Rebuilt class-name fix and private standalone CI
+### Rebuilt class-name fix and standalone CI
 
-The standalone implementation is currently in the private
-[JoVault repository](https://github.com/pushjoman21/JoVault).
+The standalone implementation is available in the public
+[JoVault repository](https://github.com/pushjoman21/JoVault), with a published
+[research preview](https://github.com/pushjoman21/JoVault/releases/tag/research-preview-2026-10-14).
+The CI run below was executed while the repository was private.
 [CI run 38561260654](https://github.com/pushjoman21/JoVault/actions/runs/38561260654)
 completed successfully at revision `b4ee21f2e034a5bdd8c8e6a5014585be2f1ad6d6`.
 It rebuilt the cumulative patch from checksum-verified official crates, audited
