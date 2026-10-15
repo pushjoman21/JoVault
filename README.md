@@ -1,6 +1,6 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/jovm-mark.svg">
-  <img src="assets/jovm-mark-light.svg" width="48" height="38" alt="JoVM mark">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/jovault-lockup-dark.svg">
+  <img src="assets/jovault-lockup-light.svg" width="150" height="40" alt="JoVault">
 </picture>
 
 # JoVault

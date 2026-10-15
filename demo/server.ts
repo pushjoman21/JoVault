@@ -128,7 +128,7 @@ export async function createDemoServer(options: DemoServerOptions = {}) {
       async (name) => [name, await readFile(new URL(name, import.meta.url), 'utf8')] as const,
     ),
   );
-  const logo = await readFile(new URL('../assets/jovm-mark.svg', import.meta.url), 'utf8');
+  const logo = await readFile(new URL('../assets/jo-mark.svg', import.meta.url), 'utf8');
   const fixed = new Map<string, { body: string | Buffer<ArrayBuffer>; type: string }>([
     ...assets.map(
       ([name, body]) =>
@@ -146,7 +146,7 @@ export async function createDemoServer(options: DemoServerOptions = {}) {
     ),
     ['/runtime.mjs', { body: runtime, type: 'text/javascript; charset=utf-8' }],
     ['/trust.mjs', { body: trustModule, type: 'text/javascript; charset=utf-8' }],
-    ['/jovm-mark.svg', { body: logo, type: 'image/svg+xml' }],
+    ['/jo-mark.svg', { body: logo, type: 'image/svg+xml' }],
   ]);
   if (boaAssets) {
     fixed.set('/boa.wasm', { body: boaAssets.wasm, type: 'application/wasm' });

@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Adopted the Jo Cyber identity: the README shows the JoVault lockup and the demo
+  uses the Jo emblem (`assets/jo-mark.svg`) instead of the earlier JoVM mark.
+
 - Clarified the JavaScript-to-bytecode overview, added a clone-and-run quickstart,
   and linked contribution and release-following options. Repository topics and
   description now identify the compiler, TypeScript VM and WebAssembly research.

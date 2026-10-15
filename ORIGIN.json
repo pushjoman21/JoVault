@@ -26,21 +26,10 @@
     {
       "source": "side_pr/JoVault/README.md",
       "destination": "README.md",
-      "sourceSha256": "30a736e205ff5123d6f59ea0f98c9f637366a56f84c1b8963764588107b9c5bb",
-      "destinationSha256": "a4c9ee9dc556dfccb60ff26eff34b76c6615d3d21a738918a662a3a123cbc9b7",
+      "sourceSha256": "415249d5ac0c845b754ae87e2e8e65c2bdbbf8933c09d5f261ac3b2e64852dd3",
+      "destinationSha256": "415249d5ac0c845b754ae87e2e8e65c2bdbbf8933c09d5f261ac3b2e64852dd3",
       "reason": "Lift the owned JoVault source tree without an alternate implementation.",
-      "transforms": [
-        {
-          "from": "../../blog/assets/jovm-mark.svg",
-          "to": "assets/jovm-mark.svg",
-          "reason": "Resolve the unchanged dark-mode picture mark within the standalone repository."
-        },
-        {
-          "from": "../../blog/assets/jovm-mark-light.svg",
-          "to": "assets/jovm-mark-light.svg",
-          "reason": "Resolve the unchanged light-mode picture mark within the standalone repository."
-        }
-      ]
+      "transforms": []
     },
     {
       "source": "side_pr/JoVault/demo/app.mjs",
@@ -53,8 +42,8 @@
     {
       "source": "side_pr/JoVault/demo/index.html",
       "destination": "demo/index.html",
-      "sourceSha256": "dce5202b483dbba69ee349b7e41904c356fd9355b7c648ca0aeee4f992856120",
-      "destinationSha256": "dce5202b483dbba69ee349b7e41904c356fd9355b7c648ca0aeee4f992856120",
+      "sourceSha256": "8a87dcb256a2f082e1e4e61bf6aaecca9b76d1ac0de40bbac2f9b124921bd56b",
+      "destinationSha256": "8a87dcb256a2f082e1e4e61bf6aaecca9b76d1ac0de40bbac2f9b124921bd56b",
       "reason": "Lift the owned JoVault source tree without an alternate implementation.",
       "transforms": []
     },
@@ -69,21 +58,10 @@
     {
       "source": "side_pr/JoVault/demo/server.ts",
       "destination": "demo/server.ts",
-      "sourceSha256": "2b6be24f2787c9a0489e66193cc7eb583c1b0d9d2b1faba1bb8f8d76dc8654b0",
-      "destinationSha256": "3616c6a3998d23542720fcad3c9e0aa474636984c4197771cf96fab9549aa4d9",
+      "sourceSha256": "7d82d3199a2248ece28243a56cd9b2cccaae886c806797c1fb15204ba2fe31ec",
+      "destinationSha256": "7d82d3199a2248ece28243a56cd9b2cccaae886c806797c1fb15204ba2fe31ec",
       "reason": "Lift the owned JoVault source tree without an alternate implementation.",
-      "transforms": [
-        {
-          "from": "../../../blog/assets/jovm-mark.svg",
-          "to": "../assets/jovm-mark.svg",
-          "reason": "Resolve the identical licensed brand asset within this repository."
-        },
-        {
-          "kind": "format",
-          "tool": "prettier@3.9.10",
-          "reason": "Keep the standalone format check passing after local path rewriting or inherited layout."
-        }
-      ]
+      "transforms": []
     },
     {
       "source": "side_pr/JoVault/demo/style.css",
@@ -771,8 +749,8 @@
     {
       "source": "side_pr/JoVault/tests/demo.test.ts",
       "destination": "tests/demo.test.ts",
-      "sourceSha256": "1afe68a1106572b9c581e0ffb6e7f70bc256dfa24d70e2ea69cbf076bf2908d9",
-      "destinationSha256": "1afe68a1106572b9c581e0ffb6e7f70bc256dfa24d70e2ea69cbf076bf2908d9",
+      "sourceSha256": "3c762afda0c0bfcb5765c3a9915e3eef068948b91d9b51f4f2e219b84c14cb44",
+      "destinationSha256": "3c762afda0c0bfcb5765c3a9915e3eef068948b91d9b51f4f2e219b84c14cb44",
       "reason": "Lift the owned JoVault source tree without an alternate implementation.",
       "transforms": []
     },
@@ -865,19 +843,27 @@
       "transforms": []
     },
     {
-      "source": "blog/assets/jovm-mark.svg",
-      "destination": "assets/jovm-mark.svg",
-      "sourceSha256": "46d964db6d6cbd514ba3f7fde9744375be72811ad01ca456bcaf77f24a860d0c",
-      "destinationSha256": "46d964db6d6cbd514ba3f7fde9744375be72811ad01ca456bcaf77f24a860d0c",
-      "reason": "Identical existing licensed brand asset.",
+      "source": "side_pr/JoVault/assets/jo-mark.svg",
+      "destination": "assets/jo-mark.svg",
+      "sourceSha256": "44eec0a4bd3778123cc37209234e5a49f0cdaeada8f03394976d4d12daec5dc1",
+      "destinationSha256": "44eec0a4bd3778123cc37209234e5a49f0cdaeada8f03394976d4d12daec5dc1",
+      "reason": "Owned JoVault copy of the Jo Cyber identity (brand/).",
       "transforms": []
     },
     {
-      "source": "blog/assets/jovm-mark-light.svg",
-      "destination": "assets/jovm-mark-light.svg",
-      "sourceSha256": "e38333fcb85604be7a903d580ccf23daa0fb81f7a4194cc07f0628dbfc11aa46",
-      "destinationSha256": "e38333fcb85604be7a903d580ccf23daa0fb81f7a4194cc07f0628dbfc11aa46",
-      "reason": "Identical existing licensed light-mode brand asset.",
+      "source": "side_pr/JoVault/assets/jovault-lockup-light.svg",
+      "destination": "assets/jovault-lockup-light.svg",
+      "sourceSha256": "a6cf0f006db68e610a0256ae3fad279f15d244a396227bc3420096eb70db038b",
+      "destinationSha256": "a6cf0f006db68e610a0256ae3fad279f15d244a396227bc3420096eb70db038b",
+      "reason": "Owned JoVault copy of the Jo Cyber identity (brand/).",
+      "transforms": []
+    },
+    {
+      "source": "side_pr/JoVault/assets/jovault-lockup-dark.svg",
+      "destination": "assets/jovault-lockup-dark.svg",
+      "sourceSha256": "828bd50f6384421cb749888458240012e72a5671c3516b29f0f611175755480d",
+      "destinationSha256": "828bd50f6384421cb749888458240012e72a5671c3516b29f0f611175755480d",
+      "reason": "Owned JoVault copy of the Jo Cyber identity (brand/).",
       "transforms": []
     },
     {
@@ -940,7 +926,7 @@
     },
     {
       "destination": "CHANGELOG.md",
-      "destinationSha256": "83855212eae4b32d826d8cf56c3082f7f71aae1fcc934d729e343b5b55f3deec"
+      "destinationSha256": "c4c66d86504dde48cf09c4a767255eaba522aeae107231ef227be3a69d061151"
     },
     {
       "destination": ".gitignore",
@@ -956,7 +942,7 @@
     },
     {
       "destination": "tests/standalone-package.test.ts",
-      "destinationSha256": "b7f26ddbb5ae237b6aa6c5ed5b3940e2a64d4c4c150331cd91ebd322668a7409"
+      "destinationSha256": "0072187e2ee6089bc5a9a610c4f762e055d91963798eeaae5bed2d25473f65ac"
     },
     {
       "destination": ".github/workflows/ci.yml",

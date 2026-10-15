@@ -114,7 +114,7 @@ test('demo serves only fixed assets and applies browser and worker security head
     '/runner.mjs',
     '/runtime.mjs',
     '/trust.mjs',
-    '/jovm-mark.svg',
+    '/jo-mark.svg',
   ]) {
     const response = await app.inject(route);
     assert.equal(response.statusCode, 200, route);
@@ -135,6 +135,7 @@ test('demo serves only fixed assets and applies browser and worker security head
     }
   }
   for (const route of [
+    '/jovm-mark.svg',
     '/jovault-mark.svg',
     '/server.ts',
     '/src/register-compiler.ts',
@@ -147,15 +148,15 @@ test('demo serves only fixed assets and applies browser and worker security head
   const queriedWorker = await app.inject('/runner.mjs?run=1');
   assert.equal(queriedWorker.statusCode, 200);
   assert.match(String(queriedWorker.headers['content-security-policy']), /connect-src 'none'/);
-  const mark = await app.inject('/jovm-mark.svg');
+  const mark = await app.inject('/jo-mark.svg');
   assert.equal(mark.headers['content-type'], 'image/svg+xml');
-  assert.match(mark.body, /<title id="title">JoVM<\/title>/);
-  assert.match(mark.body, /viewBox="0 0 40 32"/);
+  assert.match(mark.body, /<title id="t">Jo Cyber<\/title>/);
+  assert.match(mark.body, /viewBox="0 0 32 32"/);
   assert.doesNotMatch(mark.body, /<script|<image|<foreignObject|href=|url\(/i);
   const page = (await app.inject('/')).body;
-  assert.match(page, /rel="icon" href="\/jovm-mark\.svg"/);
-  assert.match(page, /<img src="\/jovm-mark\.svg" alt="" width="32" height="32"/);
-  assert.doesNotMatch(page, /jovault-mark\.svg/);
+  assert.match(page, /rel="icon" href="\/jo-mark\.svg"/);
+  assert.match(page, /<img src="\/jo-mark\.svg" alt="" width="32" height="32"/);
+  assert.doesNotMatch(page, /jovm-mark\.svg|jovault-mark\.svg/);
 });
 
 test('demo signs exact payload bytes and binds its independently served public trust to runtime and deployment', async (t) => {
